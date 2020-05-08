@@ -1,0 +1,255 @@
+<html>
+  <head>
+    <title>Basics</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div id='content'><h1 id="basic-usage">Basic Usage</h1>
+<h3 id="docker-workflow">Docker Workflow</h3>
+<p><img src="/assets/dockerworkflow233410.png" alt="" /></p>
+<ul>
+<li><p>Changes in the container does not affect the image that the container is created from</p></li>
+<li><p><code>docker run &lt;IMAGE&gt;</code> runs the image with the specified image repo and version or image ID</p></li>
+<li><p><code>docker run -ti &lt;IMAGE&gt;</code> the -ti flag stands for <em>terminal interactive</em>, useful when you want to run a terminal inside of the image</p></li>
+<li><p>Containers have a main process</p></li>
+<li><p>The container stops when the main process stops</p></li>
+<li><p>Can also use the <code>--rm</code> flag to remove the container after it exits</p></li>
+<li><p><code>docker commit &lt;CONTAINER&gt; &lt;IMAGE&gt;</code> makes a new image out of a container with a given image name</p></li>
+</ul>
+<h4 id="attaching-to-a-container">Attaching to a container</h4>
+<ul>
+<li><code>docker attach &lt;CONTAINER&gt;</code> jumps into a running container</li>
+<li>To exit an attached container do <code>ctrl-P, ctrl-Q</code></li>
+</ul>
+<h4 id="execute-a-new-process-in-a-running-container">Execute a new process in a running container</h4>
+<ul>
+<li><code>docker exec &lt;CONTAINER&gt; &lt;PROCESS&gt;</code></li>
+</ul>
+<h3 id="manage-containers">Manage Containers</h3>
+<h4 id="obtain-logs-from-a-container">Obtain logs from a container</h4>
+<ul>
+<li><code>docker logs &lt;CONTAINER&gt;</code></li>
+</ul>
+<h4 id="stopping-and-removing-a-container">Stopping and removing a container</h4>
+<ul>
+<li><code>docker kill &lt;CONTAINER&gt;</code></li>
+<li>Stops a container</li>
+<li>Makes it a stopped container</li>
+<li><code>docker rm &lt;CONTAINER&gt;</code></li>
+<li>Removes the container</li>
+<li>Stopped container will continue to exist until you explicitly removes them</li>
+</ul>
+<h3 id="networking-between-containers">Networking between containers</h3>
+<ul>
+<li><p>You can specify which port to expose in a container using the <code>-p &lt;INSIDE&gt;:&lt;OUTSIDE&gt;</code> flag with <code>docker run</code></p></li>
+<li><p>The inside port specify the port that's exposed within the container, the outside post specify the exposed port on the host</p></li>
+<li><p>The OUT port can be omitted to dynamically select the next available port</p></li>
+<li><p>Use <code>docker port &lt;CONTAINER&gt;</code> to find out which port is available on a container</p></li>
+</ul>
+<h3 id="docker-files">Docker Files</h3>
+<ul>
+<li>A file for docker that specifies how to build an image</li>
+<li>Docker caches changes in a new image file for each line in the docker file</li>
+<li>Careful with multi-line operations when working with large images</li>
+</ul>
+<h4 id="basic-syntax">Basic Syntax</h4>
+<p><code>FROM &lt;IMAGE&gt;</code> - specifies which image to start</p>
+<p><code>MAINTAINER &lt;firstname&gt; &lt;lastname&gt; &lt;email&gt;</code> - information regarding the creator (documentation purposes)</p>
+<p><code>RUN &lt;COMMAND&gt;</code> - run a command through the shell</p>
+<p><code>ADD &lt;FILE/ARCHIVE/URL&gt;</code> - can be used to add content to the image (e.g. from local files, archives, url etc.)</p>
+<p><code>ENV &lt;VAR&gt;=&lt;VALUE&gt;</code> - sets the enviroment variables; the variables will remain set in the image created</p>
+<p><code>ENTRYPOINT</code> - specifies the start of the command to run; the arguments specified when you run the image will serve as the argument for the entry point command</p>
+<p><code>CMD</code> - specifies an entire command that will be ran; if a command is supplied when running the image the CMD command will get replaced</p>
+<p><code>EXPOSE &lt;PORT&gt;</code> - maps a port into the container</p>
+<p><code>VOLUME</code> - defines shared or ephemeral volumes</p>
+<p><code>WORKDIR</code> - specifies the working directory for the docker file and the resulting image</p>
+<p><code>USER</code> - specifies which user that the container will run as</p>
+
+    </div>
+    <style type='text/css'>body {
+  font: 400 16px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #111;
+  background-color: #fdfdfd;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-feature-settings: "kern" 1;
+  -moz-font-feature-settings: "kern" 1;
+  -o-font-feature-settings: "kern" 1;
+  font-feature-settings: "kern" 1;
+  font-kerning: normal;
+  padding: 30px;
+}
+
+@media only screen and (max-width: 600px) {
+  body {
+    padding: 5px;
+  }
+
+  body > #content {
+    padding: 0px 20px 20px 20px !important;
+  }
+}
+
+body > #content {
+  margin: 0px;
+  max-width: 900px;
+  border: 1px solid #e1e4e8;
+  padding: 10px 40px;
+  padding-bottom: 20px;
+  border-radius: 2px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+hr {
+  color: #bbb;
+  background-color: #bbb;
+  height: 1px;
+  flex: 0 1 auto;
+  margin: 1em 0;
+  padding: 0;
+  border: none;
+}
+
+/**
+ * Links
+ */
+a {
+  color: #0366d6;
+  text-decoration: none; }
+  a:visited {
+    color: #0366d6; }
+  a:hover {
+    color: #0366d6;
+    text-decoration: underline; }
+
+pre {
+  background-color: #f6f8fa;
+  border-radius: 3px;
+  font-size: 85%;
+  line-height: 1.45;
+  overflow: auto;
+  padding: 16px;
+}
+
+/**
+  * Code blocks
+  */
+
+code {
+  background-color: rgba(27,31,35,.05);
+  border-radius: 3px;
+  font-size: 85%;
+  margin: 0;
+  word-wrap: break-word;
+  padding: .2em .4em;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+}
+
+pre > code {
+  background-color: transparent;
+  border: 0;
+  display: inline;
+  line-height: inherit;
+  margin: 0;
+  overflow: visible;
+  padding: 0;
+  word-wrap: normal;
+  font-size: 100%;
+}
+
+
+/**
+ * Blockquotes
+ */
+blockquote {
+  margin-left: 30px;
+  margin-top: 0px;
+  margin-bottom: 16px;
+  border-left-width: 3px;
+  padding: 0 1em;
+  color: #828282;
+  border-left: 4px solid #e8e8e8;
+  padding-left: 15px;
+  font-size: 18px;
+  letter-spacing: -1px;
+  font-style: italic;
+}
+blockquote * {
+  font-style: normal !important;
+  letter-spacing: 0;
+  color: #6a737d !important;
+}
+
+/**
+ * Tables
+ */
+table {
+  border-spacing: 2px;
+  display: block;
+  font-size: 14px;
+  overflow: auto;
+  width: 100%;
+  margin-bottom: 16px;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+td {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+th {
+  font-weight: 600;
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+tr {
+  background-color: #fff;
+  border-top: 1px solid #c6cbd1;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+/**
+ * Others
+ */
+
+img {
+  max-width: 100%;
+}
+
+p {
+  line-height: 24px;
+  font-weight: 400;
+  font-size: 16px;
+  color: #24292e; }
+
+ul {
+  margin-top: 0; }
+
+li {
+  color: #24292e;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5; }
+
+li + li {
+  margin-top: 0.25em; }
+
+* {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  color: #24292e; }
+
+a:visited {
+  color: #0366d6; }
+
+h1, h2, h3 {
+  border-bottom: 1px solid #eaecef;
+  color: #111;
+  /* Darker */ }</style>
+  </body>
+</html>

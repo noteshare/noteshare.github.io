@@ -1,0 +1,474 @@
+<html>
+  <head>
+    <title>Solutions</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div id='content'><h2 id="stacks--queues">Stacks &amp; Queues</h2>
+<h3 id="34-queue-via-stacks">3.4 Queue via Stacks</h3>
+<p>My Solution:</p>
+<ul>
+<li>Optimized multiple pops by leaving the two stacks as they are before push is called</li>
+</ul>
+<pre><code>    pseudo code
+
+    stack new // newest item on top
+    stack old // oldest item on top
+
+    function pop() {
+        if new.isEmpty() &amp;&amp; old.isEmpty {
+            // base case: return null
+        } else if !new.isEmpty() &amp;&amp; old.isEmpty() {
+            // pop every item from new and push onto old, then pop top item from old
+        } else if new.isEmpty() &amp;&amp; !old.isEmpty() {
+            // pop from old and return item
+        } else {
+            // return error, this case can be ignored
+        }
+    }
+
+    function push() {
+        if new.isEmpty() &amp;&amp; !old.isEmpty() {
+            // push every item from old and push onto new, then push onto new
+        } else {
+            // push onto new
+        }
+    }
+</code></pre>
+<h3 id="35-sorted-stack">3.5 Sorted Stack</h3>
+<p>My Solution:</p>
+<ul>
+<li>Insertion sort</li>
+<li>Assume temp. variable is allowed</li>
+</ul>
+<pre><code>    //pseudo code
+    stack original
+    stack sorted
+
+    while (!original.isEmpty()) {
+        temp = original.pop()
+        if (sorted.isEmpty() || sorted.peek() &gt;= temp) {
+            // base case
+            sorted.push(temp)
+        } else {
+            itemsMoved = 0 // counter
+            // push every item that is larger than the current sorted item onto the old stack
+            while (!sorted.isEmpty() &amp;&amp; sorted.peek() &lt; temp) {
+                original.push(sorted.pop())
+                itemsMoved++
+            }
+            // insert the item
+            sorted.push(temp)
+            // push the temporary items in the old stack back onto the sorted stack
+            while (itemsMoved &gt; 0) {
+                sorted.push(original.pop())
+                itemsMoved--
+            }
+        }
+    }
+</code></pre>
+<p>Improved solution from book:</p>
+<ul>
+<li>Move the second nested while loop outside the enclosing while loop. Since items that are pushed back to the original stack will be push back by the logic of the outer while loop.</li>
+</ul>
+<h3 id="36-animal-shelter">3.6 Animal Shelter</h3>
+<p>My solution:</p>
+<ul>
+<li>Same as the book</li>
+<li>Separate queues, timestamp on each animal</li>
+</ul>
+<h2 id="trees-and-graphs">Trees and Graphs</h2>
+<ul>
+<li>A <strong>balanced tree</strong> does not have to have perfect balanced size on both sides, as long as it is balanced enough to ensure O(log n) complexity</li>
+<li><strong>Complete binary tree</strong>: every level of the tree filled (except for the last which could remain empty)</li>
+<li><strong>Full binary tree</strong>: every node has either 0 or 2 children</li>
+<li><strong>Perfect binary tree</strong>: both full and complete</li>
+</ul>
+<h3 id="traversals">Traversals</h3>
+<ul>
+<li><strong>In-order</strong>: left, node, right</li>
+<li><strong>Pre-order</strong>: node, left, right</li>
+<li><strong>Post-order</strong>: left, right, node</li>
+</ul>
+<h3 id="42-generate-binary-search-tree-from-a-sorted-array">4.2 Generate binary search tree from a sorted array</h3>
+<p>Idea:</p>
+<ul>
+<li>Use the middle element of the array as the root</li>
+<li>Split the array in half (excluding the middle element`)</li>
+<li>Recurse on the two halves of the array</li>
+</ul>
+<h3 id="43-list-of-depth">4.3 List of depth</h3>
+<p>My Solution:</p>
+<ul>
+<li>Modify BFS (Very similar to the book's BFS solution)</li>
+<li>Create a vector</li>
+<li>Push root node of tree into vector (need to convert into a linked list node first)</li>
+<li>Iterate through the vector</li>
+<li>If the current list is not null, push a new list onto the vector</li>
+<li>Push the left and right children into the next linked list if they are not nullptr</li>
+<li>Move onto the next list and do the same</li>
+</ul>
+<h3 id="44-check-balanced">4.4 Check Balanced</h3>
+<ul>
+<li>The definition of a balanced tree is that all subtrees of every node has a height difference of &lt;= 1</li>
+</ul>
+<p>Idea:</p>
+<ul>
+<li>Create a check height function that returns the height of a given node</li>
+<li>Create a check balanced function that returns whether a given node is balanced based on the height difference of its children</li>
+<li>If the current node is not balanced, return false. If it is balanced, recurse on both of its children and make sure that they are all balanced</li>
+<li>O(n log n)</li>
+<li>An improved algorithm will be returning an error code as soon as an imbalance is detected on any of the children and force the algorithm to stop</li>
+</ul>
+<h3 id="45-validate-bst">4.5 Validate BST</h3>
+<p>Idea:</p>
+<ul>
+<li>There is a max and min range for each of the nodes in the tree</li>
+</ul>
+<pre><code>        5
+       / \
+      3   6
+     / \ 
+    2   4 
+</code></pre>
+<p>e.g. <br />
+The immediate left child (where 3 is) has a range between (-infinity, 5]<br />
+The immediate right child of 3 has a range between (3, 5)</p>
+<ul>
+<li>Create a function to validate each node recursively, it will accept a max and min value</li>
+<li>Needs a to represent infinity, in Java the Integer class can be used as it supports a null value. In C++, a custom struct is required</li>
+<li>Check if the current value is within the range, if not return false</li>
+<li>Recurse on both the left and right child, the left child should have a range of (min, currentValue), and the right should be (currentValue, max)</li>
+<li>Return true if both left &amp; right child are valid</li>
+</ul>
+<h3 id="46-successor">4.6 Successor</h3>
+<ul>
+<li>Find the next element of a given node in a BST</li>
+</ul>
+<p>Idea: There are three cases</p>
+<ol>
+<li><p>The given node has a right subtree</p>
+<ul>
+<li>The successor will be leftmost (minimum) node of the right subtree</li></ul></li>
+<li><p>The given node has no right subtree, and is the left child of its parent</p>
+<ul>
+<li>The sucessor is its parent node</li></ul></li>
+<li><p>The given node has no right subtree, and is the right child of its parent</p>
+<ul>
+<li>Traverse up the tree until the current node is the left child of its parent, the successor is the parent</li></ul></li>
+</ol>
+<ul>
+<li>If the traversal reaches the root node before finding the successor, return null</li>
+</ul>
+<h3 id="47-build-order">4.7 Build Order</h3>
+<p>Solution 1:</p>
+<ul>
+<li>Assume we have an array of pointers pointing to each project (node)</li>
+<li>Assume incoming edges of each node are its dependencies (must be build before the current node), and outgoing edges are depedent on the current node.</li>
+<li>Assume there exists an attribute in each node that keeps track of incoming edges (e.g. node.dependencies of int type)</li>
+</ul>
+<ol>
+<li>Construct a build order vector, define an int keep track of the current index (call it toBeProcessed)</li>
+<li>Initialize the vector by scanning through the array of node pointers, find nodes with no incoming edges, push onto the vector</li>
+<li>Use toBeProcessed to interate through the vector, for each child of the current node, decrement child.dependencies. If it becomes 0, push it onto the vector.</li>
+<li>If iteration of the vector is finished, it means we either have cycle or all projects are built. We can check this by scanning through the pointers array again, if there exists a node where node.dependencies &gt; 0, return error. (Can potentially be improved using a set)</li>
+</ol>
+<ul>
+<li>Takes O(P + D) time where P is the number of projects and D is the number of dependency pairs</li>
+<li>Derived from the topological sort algorithm</li>
+</ul>
+<h3 id="48-common-ancestor">4.8 Common Ancestor</h3>
+<p>Idea:</p>
+<ul>
+<li><p>Check left and right children of the current node. If they are contained in different subtrees then the current node is the common ancestor, else recurse on the child that contains both.<br />
+`<br />
+My solution:</p></li>
+<li><p>Initialize a Node pointer and set it to nullptr, this one will be passed into the recusive function by reference.</p></li>
+<li><p>A helper function is created that returns an integer flag</p>
+<ul>
+<li>0 -&gt; neither a or b is contained in the subtree</li>
+<li>1 -&gt; a is contained in the subtree</li>
+<li>2 -&gt; b is contained in the subtree</li>
+<li>3 -&gt; both are contained in the subtree</li></ul></li>
+</ul>
+<ol>
+<li>Base case: the function will return 0 if the current node is null</li>
+<li>Recurse on the right child and save the return value. If the return value is 3, it means the current node is somewhere down the left subtree, just return 3 (for efficiency).</li>
+<li>Recurse on the right child and do the same thing as left.</li>
+<li>Check return value of both right and left. If one is 1 and the other is 2, it means the current node is the common ancestor, set the ancestor pointer to the current node, and return 3 to skip the rest of the steps.</li>
+<li>Check on the current node, if the current node is a, return left + right + 1. If it is b, return left + right + 2. Else return left + right</li>
+<li>In the main function, return the ancestor pointer. If no ancestor is found (such as when one of the node does not exist in the tree), the function will simply return nullptr.</li>
+</ol>
+<ul>
+<li>The book 's solution has similar ideas but the function returns nodes instead of integer flags</li>
+</ul>
+<h3 id="49-bst-sequences">4.9 BST Sequences</h3>
+<p>Idea:</p>
+<ul>
+<li>Recursive solution</li>
+<li>We know that for each node of every subtree, the root has to go into thel list first, then the two subtree can enter in any order. Therefore the problem can be solve by post order traversal to traverse the deepest leaves and work your way up.</li>
+<li>At each node, generate all possible combinations of the sequences of the two subtrees, and append the current node to the head of each sequences</li>
+</ul>
+<h3 id="410-check-subtree">4.10 Check subtree</h3>
+<p>Idea:</p>
+<ul>
+<li>If a tree is a subtree of a binary tree, it should be a substring of the larger tree</li>
+<li>Can use pre-order traversal to concatentate the string</li>
+<li>A way is needed to determine empty leaves, or else the following case will be non-deterministic</li>
+</ul>
+<pre><code>         a       a
+       /           \
+      b              b
+</code></pre>
+<ul>
+<li>This can be solved by use special markers to indicate empty nodes. Such as 'X' if we assume it is an integer tree</li>
+</ul>
+<h3 id="412-paths-with-sum">4.12 Paths with sum</h3>
+<p>Idea:</p>
+<ul>
+<li>A bruteforce algorithm will require calculating the sum of every path at every node, the complexity would be O(N log N)<ul>
+<li>Duplicate work are being done every time when you traverse down a node</li></ul></li>
+<li>Think about an array, notice that the current sum at every element - target sum wil give you the sum required at a previous element to get to your target sum. Therefore if there are two previous elements that sums up the the number, it means there are two paths in the array to your current number that returns the target sum.</li>
+<li>If a datastructure (e.g. hashtable) is used to store the number of a given sum occurs in all previous nodes, one can simply check the number of paths by calculating currentSum - targetSum and query the value from the datastructure</li>
+</ul>
+<p>Solution:</p>
+<ol>
+<li>If the currentSum == targetSum, increment the pathCount</li>
+<li>Calculate currentSum - targetSum, if the key exists in the hashtable, add the number to pathCount</li>
+<li>If currentSum exists in the hashTable, increment value. Or else add currentSum to the hashtable with the value 1</li>
+<li>Traverse left and right</li>
+<li>Decrement the currentSum value in the hashtable (so nodes from other branches won't be counting sums from the current branch)</li>
+</ol>
+<ul>
+<li>This solution will have a runtime of O(N)</li>
+</ul>
+<h2 id="recursion-and-dynamic-programming">Recursion and Dynamic Programming</h2>
+<h3 id="81-triple-step">8.1 Triple Step</h3>
+<p>Idea:</p>
+<ul>
+<li>Essentially a tree with three branches at each node</li>
+<li>Any path from the root to the leaf is a possible combination of steps</li>
+<li>Use recursion</li>
+</ul>
+<p>Memoization Optimization:</p>
+<ul>
+<li><p>Cache the computed values of the node within a data structure so it's reusable in future computations</p></li>
+<li><p>Can produce an O(n) solution, whereas the brute force solution is O(3^n)</p></li>
+<li><p>Note the sum will overflow very quickly, bring this up to the interviewer</p></li>
+</ul>
+<h3 id="83-magic-index">8.3 Magic Index</h3>
+<p>Idea:</p>
+<ul>
+<li>If the index is unique, the solution will be similar to binary search. Since we know if a[i] = b and b < i, then the index must be on the right side. If b > i, then the index must be on the left side.</li>
+<li>If the index is not unique, we need to search on both side of the pivot. However we can vastly reduce the range of the search:<ul>
+<li>If a[i] = b and b &lt; i, then we know the magical index is somwhere in between [0, b]</li>
+<li>If a[i] = b and b &gt; i, then we know the magical index is somwhere in between [b, n - 1]</li></ul></li>
+</ul>
+<h3 id="85-recursive-multiply">8.5 Recursive Multiply</h3>
+<p>Idea:</p>
+<ul>
+<li>8 * 9 can be broken down to a tree consists of</li>
+</ul>
+<pre><code>                    8*9
+                   /   \
+                4*9     4*9
+              /     \  /    \
+            2*9   2*9 2*9    2*9
+           /  \ /  \  / \   /   \
+          9   9 9  9  9  9  9    9
+</code></pre>
+<ul>
+<li>A recusive algorithm can be constructed using division and addition</li>
+<li>Handle odd numbers e.g. 7<em>9 = 4</em>9 + 3*9</li>
+<li>Memoize repeated work</li>
+<li>You will be able to produce something close to O(n/2)</li>
+</ul>
+
+    </div>
+    <style type='text/css'>body {
+  font: 400 16px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #111;
+  background-color: #fdfdfd;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-feature-settings: "kern" 1;
+  -moz-font-feature-settings: "kern" 1;
+  -o-font-feature-settings: "kern" 1;
+  font-feature-settings: "kern" 1;
+  font-kerning: normal;
+  padding: 30px;
+}
+
+@media only screen and (max-width: 600px) {
+  body {
+    padding: 5px;
+  }
+
+  body > #content {
+    padding: 0px 20px 20px 20px !important;
+  }
+}
+
+body > #content {
+  margin: 0px;
+  max-width: 900px;
+  border: 1px solid #e1e4e8;
+  padding: 10px 40px;
+  padding-bottom: 20px;
+  border-radius: 2px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+hr {
+  color: #bbb;
+  background-color: #bbb;
+  height: 1px;
+  flex: 0 1 auto;
+  margin: 1em 0;
+  padding: 0;
+  border: none;
+}
+
+/**
+ * Links
+ */
+a {
+  color: #0366d6;
+  text-decoration: none; }
+  a:visited {
+    color: #0366d6; }
+  a:hover {
+    color: #0366d6;
+    text-decoration: underline; }
+
+pre {
+  background-color: #f6f8fa;
+  border-radius: 3px;
+  font-size: 85%;
+  line-height: 1.45;
+  overflow: auto;
+  padding: 16px;
+}
+
+/**
+  * Code blocks
+  */
+
+code {
+  background-color: rgba(27,31,35,.05);
+  border-radius: 3px;
+  font-size: 85%;
+  margin: 0;
+  word-wrap: break-word;
+  padding: .2em .4em;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+}
+
+pre > code {
+  background-color: transparent;
+  border: 0;
+  display: inline;
+  line-height: inherit;
+  margin: 0;
+  overflow: visible;
+  padding: 0;
+  word-wrap: normal;
+  font-size: 100%;
+}
+
+
+/**
+ * Blockquotes
+ */
+blockquote {
+  margin-left: 30px;
+  margin-top: 0px;
+  margin-bottom: 16px;
+  border-left-width: 3px;
+  padding: 0 1em;
+  color: #828282;
+  border-left: 4px solid #e8e8e8;
+  padding-left: 15px;
+  font-size: 18px;
+  letter-spacing: -1px;
+  font-style: italic;
+}
+blockquote * {
+  font-style: normal !important;
+  letter-spacing: 0;
+  color: #6a737d !important;
+}
+
+/**
+ * Tables
+ */
+table {
+  border-spacing: 2px;
+  display: block;
+  font-size: 14px;
+  overflow: auto;
+  width: 100%;
+  margin-bottom: 16px;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+td {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+th {
+  font-weight: 600;
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+tr {
+  background-color: #fff;
+  border-top: 1px solid #c6cbd1;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+/**
+ * Others
+ */
+
+img {
+  max-width: 100%;
+}
+
+p {
+  line-height: 24px;
+  font-weight: 400;
+  font-size: 16px;
+  color: #24292e; }
+
+ul {
+  margin-top: 0; }
+
+li {
+  color: #24292e;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5; }
+
+li + li {
+  margin-top: 0.25em; }
+
+* {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  color: #24292e; }
+
+a:visited {
+  color: #0366d6; }
+
+h1, h2, h3 {
+  border-bottom: 1px solid #eaecef;
+  color: #111;
+  /* Darker */ }</style>
+  </body>
+</html>

@@ -1,0 +1,259 @@
+<html>
+  <head>
+    <title>EC2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div id='content'><h1 id="elastic-compute-cloud-ec2">Elastic Compute Cloud (EC2)</h1>
+<p><a href="https://qwiklabs.com/focuses/368?parent=catalog" title="Qwiklabs">https://qwiklabs.com/focuses/368?parent=catalog</a></p>
+<ul>
+<li>provides resizable compute capacity in the cloud</li>
+<li>Can be accessed through the <em>Services</em> menu</li>
+</ul>
+<h3 id="ami">AMI</h3>
+<ul>
+<li>Amazon Machine Image</li>
+<li>Provides the information required to launch an instance</li>
+<li>Template for the root volume for the instance</li>
+<li>Launch permissions that control which AWS accounts can use the AMI to launch instances</li>
+<li>A block device mapping that specifies the volume to attach the instance when it is launched</li>
+</ul>
+<p><strong>Protect against accidental termination</strong> - since when an instance terminates it cannot be started again. This protects against accidental termination</p>
+<h3 id="elastic-block-store">Elastic Block Store</h3>
+<ul>
+<li>Network-attached virtual disk</li>
+<li>Used by the EC2 to store data</li>
+</ul>
+<h3 id="security-group">Security Group</h3>
+<ul>
+<li>A virtual firewall that controls the traffic for one or more instances</li>
+<li>Has a collection of rules</li>
+<li>Can be modified to control inbound and outbound traffic</li>
+<li>e.g. you can only access the webserver if inbound for port 80 is open</li>
+</ul>
+<h3 id="resize-ebs-volume">Resize EBS Volume</h3>
+<ol>
+<li>Stop instance</li>
+<li>Change type</li>
+<li>Reize</li>
+<li>Click modify, confirm, close</li>
+<li>Start instance</li>
+</ol>
+<h2 id="auto-scaling">Auto Scaling</h2>
+<ul>
+<li>Ensure that there is a correct number of EC2 instances running</li>
+<li>Done with the <em>Auto Scaling Group</em> (a collection of EC2 instances)</li>
+<li>Can specify <strong>max/min</strong> number of instances for each Auto Scaling Group</li>
+<li>Has a <em>Launch Configuration</em> as a template for launching new EC2 instances</li>
+</ul>
+<h3 id="scaling-plans">Scaling Plans</h3>
+<ul>
+<li><p>Tells Auto Scaling when and how to scale</p></li>
+<li><p><strong>Maintain current instance levels</strong> - periodic health checks; unhealthy instances are replaced</p></li>
+<li><p><strong>Manual scaling</strong> - define max/min/desired capacity for the Auto Scaling Group</p></li>
+<li><p><strong>Schedule based</strong> - predicable demands; scaling performed automatically as function of time and date</p></li>
+<li><p><strong>Demand based</strong> - define parameters (e.g. CPU utilization rate) to scale for unknown demands</p></li>
+</ul>
+<h3 id="steps">Steps</h3>
+<ol>
+<li><strong>Create launch configuration</strong> (found in Services &gt; EC2 &gt; Launch Configurations)</li>
+<li>Click Create Auto Scaling Group</li>
+<li>Click Create launch configuration</li>
+<li>Create AMI</li>
+<li><strong>Configure Auto Scaling Group</strong> (Configure Auto Scaling group details)</li>
+<li>Configure Scaling Policies (Keep initial size by default)</li>
+<li>Review and confirm</li>
+<li><strong>Verify your Auto Scaling group</strong></li>
+<li>Examine the details tab on the Auto Scaling Groups page</li>
+<li>Examine the Activity History tab (current status of your instance)</li>
+<li>Examine the Instance tab (displays the lifecycle state)</li>
+</ol>
+
+    </div>
+    <style type='text/css'>body {
+  font: 400 16px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #111;
+  background-color: #fdfdfd;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-feature-settings: "kern" 1;
+  -moz-font-feature-settings: "kern" 1;
+  -o-font-feature-settings: "kern" 1;
+  font-feature-settings: "kern" 1;
+  font-kerning: normal;
+  padding: 30px;
+}
+
+@media only screen and (max-width: 600px) {
+  body {
+    padding: 5px;
+  }
+
+  body > #content {
+    padding: 0px 20px 20px 20px !important;
+  }
+}
+
+body > #content {
+  margin: 0px;
+  max-width: 900px;
+  border: 1px solid #e1e4e8;
+  padding: 10px 40px;
+  padding-bottom: 20px;
+  border-radius: 2px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+hr {
+  color: #bbb;
+  background-color: #bbb;
+  height: 1px;
+  flex: 0 1 auto;
+  margin: 1em 0;
+  padding: 0;
+  border: none;
+}
+
+/**
+ * Links
+ */
+a {
+  color: #0366d6;
+  text-decoration: none; }
+  a:visited {
+    color: #0366d6; }
+  a:hover {
+    color: #0366d6;
+    text-decoration: underline; }
+
+pre {
+  background-color: #f6f8fa;
+  border-radius: 3px;
+  font-size: 85%;
+  line-height: 1.45;
+  overflow: auto;
+  padding: 16px;
+}
+
+/**
+  * Code blocks
+  */
+
+code {
+  background-color: rgba(27,31,35,.05);
+  border-radius: 3px;
+  font-size: 85%;
+  margin: 0;
+  word-wrap: break-word;
+  padding: .2em .4em;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+}
+
+pre > code {
+  background-color: transparent;
+  border: 0;
+  display: inline;
+  line-height: inherit;
+  margin: 0;
+  overflow: visible;
+  padding: 0;
+  word-wrap: normal;
+  font-size: 100%;
+}
+
+
+/**
+ * Blockquotes
+ */
+blockquote {
+  margin-left: 30px;
+  margin-top: 0px;
+  margin-bottom: 16px;
+  border-left-width: 3px;
+  padding: 0 1em;
+  color: #828282;
+  border-left: 4px solid #e8e8e8;
+  padding-left: 15px;
+  font-size: 18px;
+  letter-spacing: -1px;
+  font-style: italic;
+}
+blockquote * {
+  font-style: normal !important;
+  letter-spacing: 0;
+  color: #6a737d !important;
+}
+
+/**
+ * Tables
+ */
+table {
+  border-spacing: 2px;
+  display: block;
+  font-size: 14px;
+  overflow: auto;
+  width: 100%;
+  margin-bottom: 16px;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+td {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+th {
+  font-weight: 600;
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+tr {
+  background-color: #fff;
+  border-top: 1px solid #c6cbd1;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+/**
+ * Others
+ */
+
+img {
+  max-width: 100%;
+}
+
+p {
+  line-height: 24px;
+  font-weight: 400;
+  font-size: 16px;
+  color: #24292e; }
+
+ul {
+  margin-top: 0; }
+
+li {
+  color: #24292e;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5; }
+
+li + li {
+  margin-top: 0.25em; }
+
+* {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  color: #24292e; }
+
+a:visited {
+  color: #0366d6; }
+
+h1, h2, h3 {
+  border-bottom: 1px solid #eaecef;
+  color: #111;
+  /* Darker */ }</style>
+  </body>
+</html>

@@ -1,0 +1,298 @@
+<html>
+  <head>
+    <title>Basics</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div id='content'><h1 id="architecture-and-terminologies">Architecture and Terminologies</h1>
+<h3 id="terminologies">Terminologies</h3>
+<p><strong>Nodes</strong> - host that run Kubernetes applications</p>
+<p><strong>Pods</strong> - units of deployment</p>
+<p><strong>Containers</strong> - units of packaging</p>
+<p><strong>Replication Controller</strong> - ensures availability and scalability</p>
+<ul>
+<li>Ensure that the containers are in the desired state in any given point of time</li>
+</ul>
+<p><strong>Labels</strong> - key-value pairs for identification</p>
+<p><strong>Services</strong> - collection of pods exposed as an endpoint</p>
+<p><img src="/assets/kubearch040730.png" alt="" /></p>
+<h4 id="pods">Pods</h4>
+<ul>
+<li><p>Bring in multiple containers that needs to work together and stitch them together as one unit</p></li>
+<li><p>Storage resources</p></li>
+<li><p>Has unique network IP</p></li>
+<li><p>Governs how the containers should run</p></li>
+<li><p>Has multiple states</p></li>
+<li><p><strong>Pending</strong> - pod accepted by the Kubernetes system, but a container has not been created yet</p></li>
+<li><p><strong>Running</strong> - pod scheduled on a node and all the containers created with at least one container in the running state</p></li>
+<li><p><strong>Succeeded</strong> - all containers in the pod exited with a status of 0, the pod will not be restarted</p></li>
+<li><p><strong>Failed</strong> - all containers in the pod has exited with at least one container with a non-zero exit status</p></li>
+<li><p><strong>CrashLoopBackOff</strong> - pod fails to start, and Kubernetes tries over and over to restart the pod</p></li>
+</ul>
+<h3 id="controllers">Controllers</h3>
+<h4 id="replicaset">ReplicaSet</h4>
+<ul>
+<li>Ensures that a specified number of replicas of a pod are running at all times</li>
+</ul>
+<h4 id="deployment">Deployment</h4>
+<ul>
+<li><p>Provides declarative updates for pods and replica sets</p></li>
+<li><p>A deloyment manages a replica set which in turn manages a pod</p></li>
+<li><p>A new replica set is created everytime a new deployment configuration is applied, which allows support for a roleback mechanism</p></li>
+<li><p>Use cases</p></li>
+<li><p><strong>Pod management</strong> - running a replica set runs a number of pods and they can be checked as a single unit</p></li>
+<li><p><strong>Scaling</strong> - scaling a replica set also scale out the pods</p></li>
+<li><p><strong>Pause and Resume</strong> - pause deployment to make changes, and resume deployment</p></li>
+</ul>
+<h4 id="daemonsets">DaemonSets</h4>
+<ul>
+<li>Ensures that all nodes run a copy of a specified pod</li>
+<li>As nodes are added or removed from a cluster, a DaemonSet will add or remove the required pods</li>
+</ul>
+<h4 id="job">Job</h4>
+<ul>
+<li>A supervisor process carrying out batch processes to completion</li>
+<li>e.g. cron job for nightly reports and data backups</li>
+</ul>
+<h4 id="services">Services</h4>
+<ul>
+<li>Allows communcation between one set of deployments to another</li>
+<li>Has a unique IP address that never changes during it's lifetime</li>
+<li>Types of services</li>
+<li>Internal - within a cluster</li>
+<li>External - endpoint available through node IP</li>
+<li>Load balancer - exposes application to the internet</li>
+</ul>
+<h3 id="labels">Labels</h3>
+<ul>
+<li>Key/value pairs attached to objects like pods, services, and deployments</li>
+<li>For users of Kubernetes to identify attributes for objects</li>
+</ul>
+<h3 id="selectors">Selectors</h3>
+<h4 id="equality-based-selectors">Equality-based Selectors</h4>
+<ul>
+<li>Has <em>equa</em>l or not <em>equal</em> operators</li>
+<li>Two labels or values of labels should be equal (or not equal)</li>
+</ul>
+<h4 id="set-based-selectors">Set-based Selectors</h4>
+<ul>
+<li><strong>IN</strong> - whether if the value is within a set of the defined values</li>
+<li><strong>NOTIN</strong> - whether a value should not be inside a set of defined values</li>
+<li><strong>EXISTS</strong> - whether the label exists or not</li>
+</ul>
+<h3 id="namespaces">Namespaces</h3>
+<ul>
+<li>Allows you to have multiple virtual cluster backed by the same physical cluster</li>
+<li>Allows teams to access resources with accountibility</li>
+<li>Great way to divide cluster resources between users</li>
+</ul>
+<h3 id="kubelet">Kubelet</h3>
+<ul>
+<li><p>The "Kubernetes node agent" that runs on each node</p></li>
+<li><p>Roles of Kubelet</p></li>
+<li><p>Communicate with API servers to see if pods have been assigned to nodes</p></li>
+<li><p>Executes pod containers via a container engine</p></li>
+<li><p>Mounts and runs pod volumes and secrets</p></li>
+<li><p>Executes health checks to identify pod/node status</p></li>
+<li><p>Runs the containers according to the Podspec (a yaml file)</p></li>
+<li><p>Ensures that he containers described by the podspecs are running and healthy</p></li>
+</ul>
+<h3 id="kube-proxy">Kube-proxy</h3>
+<ul>
+<li>Runs on all worker nodes</li>
+<li>Reflects services as defined on each node</li>
+<li>Can do simple network stream of round-robin forwarding across a set of backends</li>
+<li>Has three modes</li>
+<li>Userspace</li>
+<li>Iptables</li>
+<li>Ipvs</li>
+</ul>
+
+    </div>
+    <style type='text/css'>body {
+  font: 400 16px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #111;
+  background-color: #fdfdfd;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-feature-settings: "kern" 1;
+  -moz-font-feature-settings: "kern" 1;
+  -o-font-feature-settings: "kern" 1;
+  font-feature-settings: "kern" 1;
+  font-kerning: normal;
+  padding: 30px;
+}
+
+@media only screen and (max-width: 600px) {
+  body {
+    padding: 5px;
+  }
+
+  body > #content {
+    padding: 0px 20px 20px 20px !important;
+  }
+}
+
+body > #content {
+  margin: 0px;
+  max-width: 900px;
+  border: 1px solid #e1e4e8;
+  padding: 10px 40px;
+  padding-bottom: 20px;
+  border-radius: 2px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+hr {
+  color: #bbb;
+  background-color: #bbb;
+  height: 1px;
+  flex: 0 1 auto;
+  margin: 1em 0;
+  padding: 0;
+  border: none;
+}
+
+/**
+ * Links
+ */
+a {
+  color: #0366d6;
+  text-decoration: none; }
+  a:visited {
+    color: #0366d6; }
+  a:hover {
+    color: #0366d6;
+    text-decoration: underline; }
+
+pre {
+  background-color: #f6f8fa;
+  border-radius: 3px;
+  font-size: 85%;
+  line-height: 1.45;
+  overflow: auto;
+  padding: 16px;
+}
+
+/**
+  * Code blocks
+  */
+
+code {
+  background-color: rgba(27,31,35,.05);
+  border-radius: 3px;
+  font-size: 85%;
+  margin: 0;
+  word-wrap: break-word;
+  padding: .2em .4em;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+}
+
+pre > code {
+  background-color: transparent;
+  border: 0;
+  display: inline;
+  line-height: inherit;
+  margin: 0;
+  overflow: visible;
+  padding: 0;
+  word-wrap: normal;
+  font-size: 100%;
+}
+
+
+/**
+ * Blockquotes
+ */
+blockquote {
+  margin-left: 30px;
+  margin-top: 0px;
+  margin-bottom: 16px;
+  border-left-width: 3px;
+  padding: 0 1em;
+  color: #828282;
+  border-left: 4px solid #e8e8e8;
+  padding-left: 15px;
+  font-size: 18px;
+  letter-spacing: -1px;
+  font-style: italic;
+}
+blockquote * {
+  font-style: normal !important;
+  letter-spacing: 0;
+  color: #6a737d !important;
+}
+
+/**
+ * Tables
+ */
+table {
+  border-spacing: 2px;
+  display: block;
+  font-size: 14px;
+  overflow: auto;
+  width: 100%;
+  margin-bottom: 16px;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+td {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+th {
+  font-weight: 600;
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+tr {
+  background-color: #fff;
+  border-top: 1px solid #c6cbd1;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+/**
+ * Others
+ */
+
+img {
+  max-width: 100%;
+}
+
+p {
+  line-height: 24px;
+  font-weight: 400;
+  font-size: 16px;
+  color: #24292e; }
+
+ul {
+  margin-top: 0; }
+
+li {
+  color: #24292e;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5; }
+
+li + li {
+  margin-top: 0.25em; }
+
+* {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  color: #24292e; }
+
+a:visited {
+  color: #0366d6; }
+
+h1, h2, h3 {
+  border-bottom: 1px solid #eaecef;
+  color: #111;
+  /* Darker */ }</style>
+  </body>
+</html>
