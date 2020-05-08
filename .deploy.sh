@@ -8,6 +8,7 @@ website_path=~/website
 
 cd $md_notebook_path; ./indexer.sh
 cd $md_gen_path; npm install; ./generate_notebook.sh $md_notebook_path
-cd $website_path; rm -r *
+cd $website_path; rm -rf *
 cp $md_gen_path/output/* $website_path/
+cd $website_path; cp .index.html index.html
 cd $website_path; git add .; git commit -m "Travis Autobuild"; git push origin master
