@@ -18,6 +18,44 @@ ${var%%pattern} # Removes the longest match from the end of the string
 <pre><code class="bash language-bash">${file##*.} # Get the extension of a file
 ${file%.*} # Get the name of a file w/o extension
 </code></pre>
+<h3 id="search-and-replace">Search and Replace</h3>
+<pre><code class="bash language-bash">${var/pattern/string} # Substitute first match with the string
+
+${var//pattern/string} # Substitute all matches witht the string
+</code></pre>
+<h3 id="anchor-your-pattern">Anchor your Pattern</h3>
+<pre><code class="bash language-bash">${var/#pattern/string} # Matches the beginning of the string
+
+${var/%pattern/string} # Matches end of the string
+</code></pre>
+<ul>
+<li>Meaning where in the string the replacement will start</li>
+</ul>
+<p>e.g.</p>
+<pre><code class="bash language-bash">i="mytxt.txt"
+
+${i/%txt/jpg} # This will replace the extension; result: "mytxt.jpg"
+</code></pre>
+<h3 id="default-values">Default values</h3>
+<pre><code class="bash language-bash">${var:-value} # Evaluates to value if var is unset or empty
+
+${var-value} # Only evaluates to value if var is unset
+
+${var:=value} # Evaluates and assigns the default value if empty or unset
+
+${var=value} # Evaluates and assigns the default value if unset
+</code></pre>
+<h3 id="conditional-expressions">Conditional Expressions</h3>
+<ul>
+<li>= and != does pattern matching</li>
+</ul>
+<pre><code class="bash language-bash">[[ $var = pattern ]] # Pattern matching
+
+[[ $var = "string" ]] # String matching when quotes are added
+</code></pre>
+<ul>
+<li>=~ does regular expression matching</li>
+</ul>
 
     </div>
     <style type='text/css'>body {
