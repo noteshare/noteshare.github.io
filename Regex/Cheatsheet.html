@@ -6,6 +6,7 @@
   <body>
     <div id='content'><h2 id="range">Range</h2>
 <p><code>[]</code> - Group range of acceptable characters e.g. <code>[A-Z0-9]</code></p>
+<p><code>[^]</code> - Negation e.g. <code>[^A-Z]</code></p>
 <h2 id="quantifier-characters">Quantifier Characters</h2>
 <ul>
 <li>Placed after the matching pattern</li>
@@ -14,6 +15,9 @@
 <p><code>*</code> - Match 0 or more times</p>
 <p><code>+</code> - Match 1 or more times</p>
 <p><code>{n}</code> - Match exactly n characters</p>
+<p><code>{n,}</code> - n or more times</p>
+<p><code>{n, m}</code> - Between n and m times</p>
+<p><code>{,m}</code> - Between 0 and m times</p>
 <h2 id="conditional">Conditional</h2>
 <p><code>|</code> - OR, can be used to match two sets of patterns</p>
 <p>e.g. Matches HTML colour codes of length 3 and 6</p>
@@ -27,6 +31,8 @@
 <p>e.g. <code>/^pattern$/</code> - Only match the entire string</p>
 <h2 id="shorthand-code">Shorthand Code</h2>
 <p><code>\s</code> - all kinds of whitespace</p>
+<h2 id="wildcard">Wildcard</h2>
+<p><code>.</code> - Match any character except for <code>\n</code>, (will match <code>\n</code> with dotall modifier)</p>
 
     </div>
     <style type='text/css'>body {
