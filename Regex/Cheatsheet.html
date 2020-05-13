@@ -18,11 +18,15 @@
 <p><code>{n,}</code> - n or more times</p>
 <p><code>{n, m}</code> - Between n and m times</p>
 <p><code>{,m}</code> - Between 0 and m times</p>
-<h2 id="conditional">Conditional</h2>
+<h2 id="branching">Branching</h2>
 <p><code>|</code> - OR, can be used to match two sets of patterns</p>
 <p>e.g. Matches HTML colour codes of length 3 and 6</p>
 <pre><code>    #?([A-F0-9]{6}|[A-F0-9]{3})
 </code></pre>
+<ul>
+<li>Has the lowest precedence of all operators</li>
+<li>Place longer matches first</li>
+</ul>
 <h2 id="pattern-modifier">Pattern modifier</h2>
 <p><code>/&lt;pattern&gt;/i</code> - Case insentitive</p>
 <h2 id="anchoring">Anchoring</h2>
@@ -33,6 +37,53 @@
 <p><code>\s</code> - all kinds of whitespace</p>
 <h2 id="wildcard">Wildcard</h2>
 <p><code>.</code> - Match any character except for <code>\n</code>, (will match <code>\n</code> with dotall modifier)</p>
+<h2 id="engine-differences">Engine Differences</h2>
+<ul>
+<li><p>PCRE - first match</p></li>
+<li><p>POSIX - longest match</p></li>
+</ul>
+<h2 id="grouping">Grouping</h2>
+<p><code>()</code> - Patterns within the parenthesis are treated as one unit</p>
+<h2 id="short-codes">Short codes</h2>
+<p><code>\d</code> - numbers <code>[0-9]</code></p>
+<p><code>\w</code> - alpha numeric <code>[A-Za-z0-9]</code></p>
+<p><code>\s</code> - spaces <code>[\t\f\r\n]</code></p>
+<p><code>\D</code> - negated <code>\d</code></p>
+<p><code>\W</code> - negated <code>\w</code></p>
+<p><code>\S</code> - negated <code>\s</code></p>
+<h3 id="pcre-72">PCRE 7.2+</h3>
+<p><code>\h</code> - horizontal spaces <code>[\t\f]</code></p>
+<p><code>\v</code> - vertical spaces <code>[\r\n]</code></p>
+<h2 id="modifiers">Modifiers</h2>
+<h3 id="gobal">Gobal</h3>
+<ul>
+<li><code>g</code></li>
+<li>returns all matches instead of just the first</li>
+<li>non-overlapping</li>
+</ul>
+<h3 id="case-insensitive">Case Insensitive</h3>
+<ul>
+<li><code>i</code></li>
+<li>May not recongnize non ascii variations</li>
+</ul>
+<h3 id="multiline">Multiline</h3>
+<ul>
+<li><code>m</code></li>
+<li>Affects <code>^</code> and <code>$</code> behaviour</li>
+<li>Matches each line of the input (separated by <code>\n</code>) instead of the entire input string</li>
+</ul>
+<h3 id="dotall--singleline">Dotall / Singleline</h3>
+<ul>
+<li><code>s</code></li>
+<li>Affects <code>.</code> to match <code>\n</code></li>
+</ul>
+<h3 id="extended">Extended</h3>
+<ul>
+<li><code>x</code></li>
+<li>All white spaces in the pattern gets ignored</li>
+<li>Better readability via multi-line regex</li>
+<li>Supports inline comment using <code>#</code></li>
+</ul>
 
     </div>
     <style type='text/css'>body {
