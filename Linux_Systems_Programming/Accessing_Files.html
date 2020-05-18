@@ -5,6 +5,10 @@
   </head>
   <body>
     <div id='content'><h1 id="accessing-files">Accessing Files</h1>
+<h2 id="unbuffered-io">Unbuffered IO</h2>
+<ul>
+<li>Direct system calls</li>
+</ul>
 <pre><code class="c language-c">fd = open(name, flags, mode)
 </code></pre>
 <p>name - path of the target file</p>
@@ -26,6 +30,61 @@ write(fd, buffer, count)
 <li>If the offset points to a position beyond the EOF<ul>
 <li>If you do a read EOF will be returned immediately</li>
 <li>If you do a write the file gets extended, the "hole" in between the new position and the old EOF will return 0s</li></ul></li>
+</ul>
+<h2 id="standard-lib-io-buffered">Standard Lib IO (Buffered)</h2>
+<ul>
+<li>Does <em>user space buffering</em><ul>
+<li>Avoids the overhead of system calls</li></ul></li>
+</ul>
+<pre><code class="c language-c">fd = fopen(name, mode)
+</code></pre>
+<p>mode - "r" reading, "w" truncate and write, "r+" update</p>
+<p>fd - returns NULL on error</p>
+<pre><code class="c language-c">fread(buffer, size, num, fd)
+</code></pre>
+<p>size - size of object</p>
+<p>num - number of objects</p>
+<pre><code class="c language-c">fclose(fd)
+</code></pre>
+<ul>
+<li>closes descriptor</li>
+<li>flushes buffer</li>
+</ul>
+<h2 id="formatted-io">Formatted IO</h2>
+<pre><code class="c language-c">printf(format_string, arg1, arg2, ...)
+
+// Write to a file
+fd = fopen(...);
+fprintf(fd, "hello");
+
+// Formats string into memory
+char[100] buf;
+sprintf(buf, "hello");
+</code></pre>
+<h2 id="scatter--gather-io">Scatter / Gather IO</h2>
+<ul>
+<li>Read or write multiple buffers of data in a single call</li>
+<li>Atomic</li>
+<li>Impelemented using <code>readv()</code> and <code>wrtitev()</code></li>
+</ul>
+<pre><code class="c language-c">writev(fd, iov, iocount)
+</code></pre>
+<p>iov - an array of iov structures<br />
+    - a buffer structure with a base address and length</p>
+<p>iocount - number of buffers</p>
+<pre><code class="c language-c">mmap(addr, length, prot, flags, fd, offset);
+</code></pre>
+<ul>
+<li>Map the file into memory to be accessed like an array</li>
+</ul>
+<p>addr - destination; NULL to allow the kernel to choose the address</p>
+<p>length - length of the mapping</p>
+<p>prot - specifies what you can do with the mapped in file (PROT<em>READ, PROT</em>WRITE)</p>
+<p>flags - speicifies if the mapped region can be shared with other processes (MAP<em>SHARED, MAP</em>PRIVATE)</p>
+<p>fd - file descriptor of the source file</p>
+<p>offset - offset within the file</p>
+<ul>
+<li>Returns the destination address</li>
 </ul>
 
     </div>
