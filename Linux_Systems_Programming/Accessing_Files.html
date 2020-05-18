@@ -1,12 +1,32 @@
 <html>
   <head>
-    <title>README</title>
+    <title>Accessing_Files</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
-    <div id='content'><h1 id="linux-systems-programming">Linux Systems Programming</h1>
-<p><a href="Basics.html">Basics</a></p>
-<p><a href="Accessing_Files.html">Accessing Files</a></p>
+    <div id='content'><h1 id="accessing-files">Accessing Files</h1>
+<pre><code class="c language-c">fd = open(name, flags, mode)
+</code></pre>
+<p>name - path of the target file</p>
+<p>flags - must include one of O<em>RDONLY, O</em>WRONLY, O<em>RDWR; 
+        optional: O</em>APPEND, O<em>CREAT, O</em>TRUNC</p>
+<p>fd - lowest available file descriptor; 0 - keyboard, 1 - stdout, 2 - stderr</p>
+<pre><code class="c language-c">read(fd, buffer, count)
+
+write(fd, buffer, count)
+</code></pre>
+<p>buffer - pointer to buffer</p>
+<p>count - size of the buffer</p>
+<h3 id="random-access">Random Access</h3>
+<pre><code class="c language-c">lseek(fd, offset, whence)
+</code></pre>
+<p>offset - a byte offset (can be positive or negative)</p>
+<p>whence - where the offset is relative to; SEEK<em>SET - start of file, SEEK</em>CUR - current position, SEEK_END - end of file</p>
+<ul>
+<li>If the offset points to a position beyond the EOF<ul>
+<li>If you do a read EOF will be returned immediately</li>
+<li>If you do a write the file gets extended, the "hole" in between the new position and the old EOF will return 0s</li></ul></li>
+</ul>
 
     </div>
     <style type='text/css'>body {
