@@ -1,57 +1,61 @@
 <html>
   <head>
     <title>String_Manipulation</title>
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
     <div id='content'><h1 id="string-manipulation">String Manipulation</h1>
 <h3 id="removing-part-of-a-string">Removing part of a string</h3>
-<pre><code class="bash language-bash">${var#pattern} # Removes the shortest match from the beginning of the string
+<pre><code class="hljs bash language-bash"><span class="hljs-variable">${var#pattern}</span> <span class="hljs-comment"># Removes the shortest match from the beginning of the string</span>
 
-${var##pattern} # Removes the longest match from the beginning of the string
+<span class="hljs-variable">${var##pattern}</span> <span class="hljs-comment"># Removes the longest match from the beginning of the string</span>
 
-${var%pattern} # Removes the shortest match from the end of the string
+<span class="hljs-variable">${var%pattern}</span> <span class="hljs-comment"># Removes the shortest match from the end of the string</span>
 
-${var%%pattern} # Removes the longest match from the end of the string
+<span class="hljs-variable">${var%%pattern}</span> <span class="hljs-comment"># Removes the longest match from the end of the string</span>
 </code></pre>
 <h4 id="usages">Usages</h4>
-<pre><code class="bash language-bash">${file##*.} # Get the extension of a file
-${file%.*} # Get the name of a file w/o extension
+<pre><code class="hljs bash language-bash"><span class="hljs-variable">${file##*.}</span> <span class="hljs-comment"># Get the extension of a file</span>
+<span class="hljs-variable">${file%.*}</span> <span class="hljs-comment"># Get the name of a file w/o extension</span>
 </code></pre>
 <h3 id="search-and-replace">Search and Replace</h3>
-<pre><code class="bash language-bash">${var/pattern/string} # Substitute first match with the string
+<pre><code class="hljs bash language-bash"><span class="hljs-variable">${var/pattern/string}</span> <span class="hljs-comment"># Substitute first match with the string</span>
 
-${var//pattern/string} # Substitute all matches witht the string
+<span class="hljs-variable">${var//pattern/string}</span> <span class="hljs-comment"># Substitute all matches witht the string</span>
 </code></pre>
 <h3 id="anchor-your-pattern">Anchor your Pattern</h3>
-<pre><code class="bash language-bash">${var/#pattern/string} # Matches the beginning of the string
+<pre><code class="hljs bash language-bash"><span class="hljs-variable">${var/#pattern/string}</span> <span class="hljs-comment"># Matches the beginning of the string</span>
 
-${var/%pattern/string} # Matches end of the string
+<span class="hljs-variable">${var/%pattern/string}</span> <span class="hljs-comment"># Matches end of the string</span>
 </code></pre>
 <ul>
 <li>Meaning where in the string the replacement will start</li>
 </ul>
 <p>e.g.</p>
-<pre><code class="bash language-bash">i="mytxt.txt"
+<pre><code class="hljs bash language-bash">i=<span class="hljs-string">"mytxt.txt"</span>
 
-${i/%txt/jpg} # This will replace the extension; result: "mytxt.jpg"
+<span class="hljs-variable">${i/%txt/jpg}</span> <span class="hljs-comment"># This will replace the extension; result: "mytxt.jpg"</span>
 </code></pre>
 <h3 id="default-values">Default values</h3>
-<pre><code class="bash language-bash">${var:-value} # Evaluates to value if var is unset or empty
+<pre><code class="hljs bash language-bash"><span class="hljs-variable">${var:-value}</span> <span class="hljs-comment"># Evaluates to value if var is unset or empty</span>
 
-${var-value} # Only evaluates to value if var is unset
+<span class="hljs-variable">${var-value}</span> <span class="hljs-comment"># Only evaluates to value if var is unset</span>
 
-${var:=value} # Evaluates and assigns the default value if empty or unset
+<span class="hljs-variable">${var:=value}</span> <span class="hljs-comment"># Evaluates and assigns the default value if empty or unset</span>
 
-${var=value} # Evaluates and assigns the default value if unset
+<span class="hljs-variable">${var=value}</span> <span class="hljs-comment"># Evaluates and assigns the default value if unset</span>
 </code></pre>
 <h3 id="conditional-expressions">Conditional Expressions</h3>
 <ul>
 <li>= and != does pattern matching</li>
 </ul>
-<pre><code class="bash language-bash">[[ $var = pattern ]] # Pattern matching
+<pre><code class="hljs bash language-bash">[[ <span class="hljs-variable">$var</span> = pattern ]] <span class="hljs-comment"># Pattern matching</span>
 
-[[ $var = "string" ]] # String matching when quotes are added
+[[ <span class="hljs-variable">$var</span> = <span class="hljs-string">"string"</span> ]] <span class="hljs-comment"># String matching when quotes are added</span>
 </code></pre>
 <ul>
 <li>=~ does regular expression matching</li>

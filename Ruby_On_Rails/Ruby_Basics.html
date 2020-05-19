@@ -1,72 +1,76 @@
 <html>
   <head>
     <title>Ruby_Basics</title>
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
     <div id='content'><h2 id="ruby-basics">Ruby Basics</h2>
 <h3 id="operators">Operators</h3>
-<pre><code class="ruby language-ruby">  variable = "lol"
-  variable.upcase! # ! operator mutates the variable
+<pre><code class="hljs ruby language-ruby">  variable = <span class="hljs-string">"lol"</span>
+  variable.upcase! <span class="hljs-comment"># ! operator mutates the variable</span>
 
-  # Combined comparison Operators
-  # returns 0 if first is equal to second
-  # 1 if first is greater than second
-  # 2 if first is less than second
+  <span class="hljs-comment"># Combined comparison Operators</span>
+  <span class="hljs-comment"># returns 0 if first is equal to second</span>
+  <span class="hljs-comment"># 1 if first is greater than second</span>
+  <span class="hljs-comment"># 2 if first is less than second</span>
   first &lt;=&gt; second
 
-  # Conditional assignment
-  # Only assign "LOL" if variable is nil
-  variable ||= "LOL"
+  <span class="hljs-comment"># Conditional assignment</span>
+  <span class="hljs-comment"># Only assign "LOL" if variable is nil</span>
+  variable <span class="hljs-params">||</span>= <span class="hljs-string">"LOL"</span>
 </code></pre>
 <h3 id="statements">Statements</h3>
-<pre><code class="ruby language-ruby">  # Opposite of if
-  unless booleanExpression
-    # something
-  else
-    # something
-  end
+<pre><code class="hljs ruby language-ruby">  <span class="hljs-comment"># Opposite of if</span>
+  <span class="hljs-keyword">unless</span> booleanExpression
+    <span class="hljs-comment"># something</span>
+  <span class="hljs-keyword">else</span>
+    <span class="hljs-comment"># something</span>
+  <span class="hljs-keyword">end</span>
 
-  # Simplier control statements
-  statement if booleanExpression
-  statement unless booleanExpression
+  <span class="hljs-comment"># Simplier control statements</span>
+  statement <span class="hljs-keyword">if</span> booleanExpression
+  statement <span class="hljs-keyword">unless</span> booleanExpression
 
-  for n in 1...100
-    # everything from 1 to 99
-    # .. will include 100
+  <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> <span class="hljs-number">1</span>...<span class="hljs-number">100</span>
+    <span class="hljs-comment"># everything from 1 to 99</span>
+    <span class="hljs-comment"># .. will include 100</span>
 
-    # break statement
-    break if booleanExpression
-    # skip to next value
-    next if booleanExpression
-  end
+    <span class="hljs-comment"># break statement</span>
+    <span class="hljs-keyword">break</span> <span class="hljs-keyword">if</span> booleanExpression
+    <span class="hljs-comment"># skip to next value</span>
+    <span class="hljs-keyword">next</span> <span class="hljs-keyword">if</span> booleanExpression
+  <span class="hljs-keyword">end</span>
 
-  object.each do |x|
-    # do something with x
-  end
-  # Self explanatory
+  object.each <span class="hljs-keyword">do</span> <span class="hljs-params">|x|</span>
+    <span class="hljs-comment"># do something with x</span>
+  <span class="hljs-keyword">end</span>
+  <span class="hljs-comment"># Self explanatory</span>
   object.each_key {}
   object.each_value {}
 
-  # Do something to every element in the collection, same as map
-  object.collect {|x| # Do something to x }
+  <span class="hljs-comment"># Do something to every element in the collection, same as map</span>
+  object.collect {<span class="hljs-params">|x|</span> <span class="hljs-comment"># Do something to x }</span>
   object.map {}
 
-  # print gg 100 times
-  100.times { print "gg" }
+  <span class="hljs-comment"># print gg 100 times</span>
+  <span class="hljs-number">100</span>.times { print <span class="hljs-string">"gg"</span> }
 
-  # print 1 up to 100 inclusive
-  1.upto(100) { |x| print x }
-  100.downto(1) { |x| print x } # self explanatory
+  <span class="hljs-comment"># print 1 up to 100 inclusive</span>
+  <span class="hljs-number">1</span>.upto(<span class="hljs-number">100</span>) { <span class="hljs-params">|x|</span> print x }
+  <span class="hljs-number">100</span>.downto(<span class="hljs-number">1</span>) { <span class="hljs-params">|x|</span> print x } <span class="hljs-comment"># self explanatory</span>
 
-  # Saves the block in the variable
+  <span class="hljs-comment"># Saves the block in the variable</span>
   saved_block = Proc.new {}
 
   object.map(&amp;saved_block)
-  # Pass in lib method as a block using symbol
-  object.map(&amp;:to_s)
+  <span class="hljs-comment"># Pass in lib method as a block using symbol</span>
+  object.map(&amp;<span class="hljs-symbol">:to_s</span>)
 
-  # Lambdas
+  <span class="hljs-comment"># Lambdas</span>
   lam = lambda { expressions }
 </code></pre>
 <h3 id="methods">Methods</h3>
@@ -74,131 +78,131 @@
 <li>Will return the last evaluated statement of the method if no return statement<br />
 is specified</li>
 </ul>
-<pre><code class="ruby language-ruby">  variable = gets.chomp # waits for user input and assigns to variable
-  variable.include? "s" # returns true if s is a substring of variable
+<pre><code class="hljs ruby language-ruby">  variable = gets.chomp <span class="hljs-comment"># waits for user input and assigns to variable</span>
+  variable.<span class="hljs-keyword">include</span>? <span class="hljs-string">"s"</span> <span class="hljs-comment"># returns true if s is a substring of variable</span>
 
-  variable.gsub!(/s/, "lol") # replaces s with lol
+  variable.gsub!(<span class="hljs-regexp">/s/</span>, <span class="hljs-string">"lol"</span>) <span class="hljs-comment"># replaces s with lol</span>
 
-  # if the method can be called upon the given object
-  object.respond_to?(:method_name)
+  <span class="hljs-comment"># if the method can be called upon the given object</span>
+  object.respond_to?(<span class="hljs-symbol">:method_name</span>)
 
-  # Yield keyword
-  # The statements inside the block will be executed in the place of yield keyword
-  def block_method(x)
-    # Do something
-    yield(x)
-    # Do something
-  end
-  block_method { |x| #Do something in the block }
+  <span class="hljs-comment"># Yield keyword</span>
+  <span class="hljs-comment"># The statements inside the block will be executed in the place of yield keyword</span>
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">block_method</span><span class="hljs-params">(x)</span></span>
+    <span class="hljs-comment"># Do something</span>
+    <span class="hljs-keyword">yield</span>(x)
+    <span class="hljs-comment"># Do something</span>
+  <span class="hljs-keyword">end</span>
+  block_method { <span class="hljs-params">|x|</span> <span class="hljs-comment">#Do something in the block }</span>
 </code></pre>
 <h3 id="data-structure">Data Structure</h3>
-<pre><code class="ruby language-ruby">  # Hash
+<pre><code class="hljs ruby language-ruby">  <span class="hljs-comment"># Hash</span>
 
-  # Create new Hash table
+  <span class="hljs-comment"># Create new Hash table</span>
   htable = Hash.new
-  # can pass in a default argument for hashes
-  htable = Hash.new(0)
+  <span class="hljs-comment"># can pass in a default argument for hashes</span>
+  htable = Hash.new(<span class="hljs-number">0</span>)
 
-  # or
+  <span class="hljs-comment"># or</span>
   table = {
-    "lol" =&gt; 123,
-    "gg" =&gt; true
+    <span class="hljs-string">"lol"</span> =&gt; <span class="hljs-number">123</span>,
+    <span class="hljs-string">"gg"</span> =&gt; <span class="hljs-literal">true</span>
   }
 
-  # Sorting
-  # Sort by key
-  htable.sort_by do |key, value|
+  <span class="hljs-comment"># Sorting</span>
+  <span class="hljs-comment"># Sort by key</span>
+  htable.sort_by <span class="hljs-keyword">do</span> <span class="hljs-params">|key, value|</span>
     key
-  end
-  # Sort by value  
-  htable.sort_by do |key, value|
+  <span class="hljs-keyword">end</span>
+  <span class="hljs-comment"># Sort by value  </span>
+  htable.sort_by <span class="hljs-keyword">do</span> <span class="hljs-params">|key, value|</span>
     value
-  end
+  <span class="hljs-keyword">end</span>
 </code></pre>
 <h3 id="symbols">Symbols</h3>
-<pre><code class="ruby language-ruby">  # Kind of like enums in C++/Java
-  # Can be used as keys in a hash table
-  :symb1
-  :symb2
+<pre><code class="hljs ruby language-ruby">  <span class="hljs-comment"># Kind of like enums in C++/Java</span>
+  <span class="hljs-comment"># Can be used as keys in a hash table</span>
+  <span class="hljs-symbol">:symb1</span>
+  <span class="hljs-symbol">:symb2</span>
 
   hash = {
-    :symb =&gt; true,
-    :lol =&gt; false
+    <span class="hljs-symbol">:symb</span> =&gt; <span class="hljs-literal">true</span>,
+    <span class="hljs-symbol">:lol</span> =&gt; <span class="hljs-literal">false</span>
   }
 
-  # Converts to string "symb1"
-  :symb1.to_s
+  <span class="hljs-comment"># Converts to string "symb1"</span>
+  <span class="hljs-symbol">:symb1</span>.to_s
 
-  # Converts to symbol :symb1
-  "symb1".to_sym
+  <span class="hljs-comment"># Converts to symbol :symb1</span>
+  <span class="hljs-string">"symb1"</span>.to_sym
 
-  # Internalizes string to symbol :symb1
+  <span class="hljs-comment"># Internalizes string to symbol :symb1</span>
 
-  "symb1".intern
+  <span class="hljs-string">"symb1"</span>.intern
 </code></pre>
 <h3 id="class">Class</h3>
 <ul>
 <li>methods are public by default</li>
 </ul>
-<pre><code class="ruby language-ruby">  class MyClass
-    @instance_var = "this is an instance variable"
-    @@class_var = "class variable, like static variable"
-    $global_var = "global variable"
+<pre><code class="hljs ruby language-ruby">  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span></span>
+    @instance_var = <span class="hljs-string">"this is an instance variable"</span>
+    @@class_var = <span class="hljs-string">"class variable, like static variable"</span>
+    $global_var = <span class="hljs-string">"global variable"</span>
 
-    # Constructor
-    def initialize(param)
+    <span class="hljs-comment"># Constructor</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">initialize</span><span class="hljs-params">(param)</span></span>
       @some_var = param
-    end
+    <span class="hljs-keyword">end</span>
 
-    # Shorthand for accessor methods
-    attr_reader :instance_var
-    attr_writer :instance_var
+    <span class="hljs-comment"># Shorthand for accessor methods</span>
+    <span class="hljs-keyword">attr_reader</span> <span class="hljs-symbol">:instance_var</span>
+    <span class="hljs-keyword">attr_writer</span> <span class="hljs-symbol">:instance_var</span>
 
-    # Or you can specify this to have both
-    attr_accessor :instance_var
+    <span class="hljs-comment"># Or you can specify this to have both</span>
+    <span class="hljs-keyword">attr_accessor</span> <span class="hljs-symbol">:instance_var</span>
 
     public
-    def method_1
-      # Do something
-    end
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">method_1</span></span>
+      <span class="hljs-comment"># Do something</span>
+    <span class="hljs-keyword">end</span>
 
-    # class method (static)
-    def MyClass.class_method
-      # Do something
-    end
+    <span class="hljs-comment"># class method (static)</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">MyClass</span>.<span class="hljs-title">class_method</span></span>
+      <span class="hljs-comment"># Do something</span>
+    <span class="hljs-keyword">end</span>
     private
-    # Do something
-  end
+    <span class="hljs-comment"># Do something</span>
+  <span class="hljs-keyword">end</span>
 
-  # Usage
-  instance = MyClass.new("lol")
+  <span class="hljs-comment"># Usage</span>
+  instance = MyClass.new(<span class="hljs-string">"lol"</span>)
   put instance.instance_var
   put MyClass.class_var
   put $global_var
 
-  # Inheritance
-  class ChildClass &lt; MyClass
-    # Will inherit all the methods of the parent class
-    # Methods can be overriden
+  <span class="hljs-comment"># Inheritance</span>
+  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ChildClass</span> &lt; MyClass</span>
+    <span class="hljs-comment"># Will inherit all the methods of the parent class</span>
+    <span class="hljs-comment"># Methods can be overriden</span>
 
-    # Override the parent method
-    def method_1
-      super # Calls the method of the parent class
-    end
-  end
+    <span class="hljs-comment"># Override the parent method</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">method_1</span></span>
+      <span class="hljs-keyword">super</span> <span class="hljs-comment"># Calls the method of the parent class</span>
+    <span class="hljs-keyword">end</span>
+  <span class="hljs-keyword">end</span>
 </code></pre>
 <h3 id="modules">Modules</h3>
-<pre><code class="ruby language-ruby">  module MyModule
-  end
+<pre><code class="hljs ruby language-ruby">  <span class="hljs-class"><span class="hljs-keyword">module</span> <span class="hljs-title">MyModule</span></span>
+  <span class="hljs-keyword">end</span>
 
-  require 'MyModule'
+  <span class="hljs-keyword">require</span> <span class="hljs-string">'MyModule'</span>
 
-  class MyClass
-    # Includes the scope of the module
-    include MyModule
-    # Inherit all the methods from MyModule
+  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span></span>
+    <span class="hljs-comment"># Includes the scope of the module</span>
+    <span class="hljs-keyword">include</span> MyModule
+    <span class="hljs-comment"># Inherit all the methods from MyModule</span>
     extend MyModule
-  end
+  <span class="hljs-keyword">end</span>
 </code></pre>
 
     </div>

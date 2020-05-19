@@ -1,6 +1,10 @@
 <html>
   <head>
     <title>Active_Record</title>
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
@@ -16,33 +20,33 @@
 </ul>
 <h2 id="crud">CRUD</h2>
 <h3 id="create">Create</h3>
-<pre><code class="ruby language-ruby">  # Create and save to the data base
-  user = User.create(name: "some_name" occupation: "some_info")
+<pre><code class="hljs ruby language-ruby">  <span class="hljs-comment"># Create and save to the data base</span>
+  user = User.create(<span class="hljs-symbol">name:</span> <span class="hljs-string">"some_name"</span> <span class="hljs-symbol">occupation:</span> <span class="hljs-string">"some_info"</span>)
 
-  # Create an object without saving
+  <span class="hljs-comment"># Create an object without saving</span>
   user = User.new
-  user.name = "some_name"
-  user.occupation = "some_info"
-  # commit to the database
+  user.name = <span class="hljs-string">"some_name"</span>
+  user.occupation = <span class="hljs-string">"some_info"</span>
+  <span class="hljs-comment"># commit to the database</span>
   user.save
 
-  # Using block
-  user = User.new do |u|
-    u.name = "some_name"
-    u.occupation = "some_info"
-  end
+  <span class="hljs-comment"># Using block</span>
+  user = User.new <span class="hljs-keyword">do</span> <span class="hljs-params">|u|</span>
+    u.name = <span class="hljs-string">"some_name"</span>
+    u.occupation = <span class="hljs-string">"some_info"</span>
+  <span class="hljs-keyword">end</span>
 </code></pre>
 <h3 id="read">Read</h3>
-<pre><code class="ruby language-ruby">  # return a collection with all users
+<pre><code class="hljs ruby language-ruby">  <span class="hljs-comment"># return a collection with all users</span>
   users = User.all
-  # return first user
+  <span class="hljs-comment"># return first user</span>
   user = User.first
-  # return the first user with a given name
-  user = User.find_by(name: 'some_given_user')
-  # find all users with the given properties and sort by create_at in reverse
-  # chronological order
-  users = User.where(name: 'some_given_name', occupation: 'some_given_occ')
-                                                    .order(created_at :desc)
+  <span class="hljs-comment"># return the first user with a given name</span>
+  user = User.find_by(<span class="hljs-symbol">name:</span> <span class="hljs-string">'some_given_user'</span>)
+  <span class="hljs-comment"># find all users with the given properties and sort by create_at in reverse</span>
+  <span class="hljs-comment"># chronological order</span>
+  users = User.where(<span class="hljs-symbol">name:</span> <span class="hljs-string">'some_given_name'</span>, <span class="hljs-symbol">occupation:</span> <span class="hljs-string">'some_given_occ'</span>)
+                                                    .order(created_at <span class="hljs-symbol">:desc</span>)
 </code></pre>
 <p>More on Query Interface:</p>
 <p>http://guides.rubyonrails.org/active<em>record</em>querying.html</p>
@@ -51,26 +55,26 @@
 <li>Can be achieved using the find_by method to query the item, update the object,<br />
 and call save a shorthand for this would be</li>
 </ul>
-<pre><code class="ruby language-ruby">  user = user.find_by(name: 'some_given_user')
-  user.update(name: 'new_name')
+<pre><code class="hljs ruby language-ruby">  user = user.find_by(<span class="hljs-symbol">name:</span> <span class="hljs-string">'some_given_user'</span>)
+  user.update(<span class="hljs-symbol">name:</span> <span class="hljs-string">'new_name'</span>)
 </code></pre>
 <ul>
 <li>Update attributes in bulk</li>
 </ul>
-<pre><code class="ruby language-ruby">  # update_all(updates, conditions = nil, options = {})
-  # updates: a string of column/value pairs that will be set on any record matching the conditions
-  # conditions: outlines which records will be applied with the updates
-  # options: e.g. :limit, :order  
+<pre><code class="hljs ruby language-ruby">  <span class="hljs-comment"># update_all(updates, conditions = nil, options = {})</span>
+  <span class="hljs-comment"># updates: a string of column/value pairs that will be set on any record matching the conditions</span>
+  <span class="hljs-comment"># conditions: outlines which records will be applied with the updates</span>
+  <span class="hljs-comment"># options: e.g. :limit, :order  </span>
 
-  # Update all billing objects with the 3 different attributes given
-  Billing.update_all( "category = 'authorized', approved = 1, author = 'David'" )
+  <span class="hljs-comment"># Update all billing objects with the 3 different attributes given</span>
+  Billing.update_all( <span class="hljs-string">"category = 'authorized', approved = 1, author = 'David'"</span> )
 
-  # Update records that match our conditions
-  Billing.update_all( "author = 'David'", "title LIKE '%Rails%'" )
+  <span class="hljs-comment"># Update records that match our conditions</span>
+  Billing.update_all( <span class="hljs-string">"author = 'David'"</span>, <span class="hljs-string">"title LIKE '%Rails%'"</span> )
 
-  # Update records that match our conditions but limit it to 5 ordered by date
-  Billing.update_all( "author = 'David'", "title LIKE '%Rails%'",
-                        :order =&gt; 'created_at', :limit =&gt; 5 )
+  <span class="hljs-comment"># Update records that match our conditions but limit it to 5 ordered by date</span>
+  Billing.update_all( <span class="hljs-string">"author = 'David'"</span>, <span class="hljs-string">"title LIKE '%Rails%'"</span>,
+                        <span class="hljs-symbol">:order</span> =&gt; <span class="hljs-string">'created_at'</span>, <span class="hljs-symbol">:limit</span> =&gt; <span class="hljs-number">5</span> )
 </code></pre>
 <p>More Info:</p>
 <p>https://apidock.com/rails/ActiveRecord/Base/update_all/class</p>
@@ -78,7 +82,7 @@ and call save a shorthand for this would be</li>
 <ul>
 <li>Query the record object and call destroy on the object</li>
 </ul>
-<pre><code class="ruby language-ruby">    user = User.find_by(name: 'given_name')
+<pre><code class="hljs ruby language-ruby">    user = User.find_by(<span class="hljs-symbol">name:</span> <span class="hljs-string">'given_name'</span>)
     user.destroy
 </code></pre>
 <h2 id="validation">Validation</h2>
@@ -89,10 +93,10 @@ which indicates if the validation is successful</li>
 <li>This information can then be used to handle the the invalid input e.g. inform<br />
 the user</li>
 </ul>
-<pre><code class="ruby language-ruby">  validates :id, conditions
+<pre><code class="hljs ruby language-ruby">  validates <span class="hljs-symbol">:id</span>, conditions
 
-  record_obj.valid? # Returns a boolean, indicates if the entry is valid
-  record_obj.errors.messages # Returns a hash with the respective error messages
+  record_obj.valid? <span class="hljs-comment"># Returns a boolean, indicates if the entry is valid</span>
+  record_obj.errors.messages <span class="hljs-comment"># Returns a hash with the respective error messages</span>
 </code></pre>
 <ul>
 <li>Some methods skips validations, check the documentation for more details</li>
@@ -132,60 +136,60 @@ rails thinks it has already run the migration</p></li>
 <li><p>It is a good idea to always writing new migrations</p></li>
 </ul>
 <h4 id="creating-a-table">Creating a table</h4>
-<pre><code class="ruby language-ruby">  # Create new table with column name
-  create_table :table_name do |t|
-    t.string :name
-  end
+<pre><code class="hljs ruby language-ruby">  <span class="hljs-comment"># Create new table with column name</span>
+  create_table <span class="hljs-symbol">:table_name</span> <span class="hljs-keyword">do</span> <span class="hljs-params">|t|</span>
+    t.string <span class="hljs-symbol">:name</span>
+  <span class="hljs-keyword">end</span>
 </code></pre>
 <h4 id="changing-a-table">Changing a table</h4>
-<pre><code class="ruby language-ruby">  change_table :table_name do |t|
-    t.remove :description, :name
-    t.string :new_col
-    t.index :new_col
-    t.rename :old :new
-  end
+<pre><code class="hljs ruby language-ruby">  change_table <span class="hljs-symbol">:table_name</span> <span class="hljs-keyword">do</span> <span class="hljs-params">|t|</span>
+    t.remove <span class="hljs-symbol">:description</span>, <span class="hljs-symbol">:name</span>
+    t.string <span class="hljs-symbol">:new_col</span>
+    t.index <span class="hljs-symbol">:new_col</span>
+    t.rename <span class="hljs-symbol">:old</span> <span class="hljs-symbol">:new</span>
+  <span class="hljs-keyword">end</span>
 </code></pre>
 <ul>
 <li>An "id" is created by default as the primary key</li>
 </ul>
-<pre><code class="ruby language-ruby">  # Change a column to type text
-  change_column :table_name, :col_name, :text
-  # Change null constraint
-  change_column_null :table_name, :col_name, false
-  # Change default value from true to false
-  change_column_default :table_name, :col_name, from: true, to: false
+<pre><code class="hljs ruby language-ruby">  <span class="hljs-comment"># Change a column to type text</span>
+  change_column <span class="hljs-symbol">:table_name</span>, <span class="hljs-symbol">:col_name</span>, <span class="hljs-symbol">:text</span>
+  <span class="hljs-comment"># Change null constraint</span>
+  change_column_null <span class="hljs-symbol">:table_name</span>, <span class="hljs-symbol">:col_name</span>, <span class="hljs-literal">false</span>
+  <span class="hljs-comment"># Change default value from true to false</span>
+  change_column_default <span class="hljs-symbol">:table_name</span>, <span class="hljs-symbol">:col_name</span>, <span class="hljs-symbol">from:</span> <span class="hljs-literal">true</span>, <span class="hljs-symbol">to:</span> <span class="hljs-literal">false</span>
 </code></pre>
 <h4 id="foreign-keys">Foreign Keys</h4>
-<pre><code class="ruby language-ruby">  # Creates a foreign key
-  add_foreign_key :table_name, :key_name
-  # Remove a foreign key, let Active Record figure out the column name
-  remove_foreign_key :table_name, :key_name  
+<pre><code class="hljs ruby language-ruby">  <span class="hljs-comment"># Creates a foreign key</span>
+  add_foreign_key <span class="hljs-symbol">:table_name</span>, <span class="hljs-symbol">:key_name</span>
+  <span class="hljs-comment"># Remove a foreign key, let Active Record figure out the column name</span>
+  remove_foreign_key <span class="hljs-symbol">:table_name</span>, <span class="hljs-symbol">:key_name</span>  
 </code></pre>
 <h4 id="runningrolling-back-migrations">Running/Rolling back migrations</h4>
 <ul>
 <li>Run the migration up to the given timestamp</li>
 </ul>
-<pre><code>  bin/rails db:migrate VERSION=&lt;timestamp&gt;
+<pre><code class="hljs">  bin/rails db:migrate VERSION=&lt;<span class="hljs-type">timestamp</span>&gt;
 </code></pre>
 <ul>
 <li>Rollback the latest migration</li>
 </ul>
-<pre><code>  bin/rails db:rollback
+<pre><code class="hljs">  <span class="hljs-keyword">bin/rails </span>db:rollback
 </code></pre>
 <ul>
 <li>rollback the last 3 migrations</li>
 </ul>
-<pre><code>  bin/rails db:rollback STEP=3
+<pre><code class="hljs">  bin/rails db:rollback <span class="hljs-attribute">STEP</span>=3
 </code></pre>
 <ul>
 <li>rollback and migrate back up again</li>
 </ul>
-<pre><code>  bin/rails db:migrate:redo STEP=3  
+<pre><code class="hljs">  bin/rails <span class="hljs-string">db:</span><span class="hljs-string">migrate:</span>redo STEP=<span class="hljs-number">3</span>  
 </code></pre>
 <ul>
 <li>Running the specific migration of the given timestamp</li>
 </ul>
-<pre><code>  bin/rails db:migrate:up VERSION=&lt;timestamp&gt;
+<pre><code class="hljs">  bin/rails d<span class="hljs-variable">b:migrate</span>:<span class="hljs-keyword">up</span> VERSION=<span class="hljs-symbol">&lt;timestamp&gt;</span>
 </code></pre>
 <h4 id="schema-dumps">Schema Dumps</h4>
 <ul>
@@ -196,17 +200,17 @@ rails thinks it has already run the migration</p></li>
 constraints etc.)</li>
 </ul>
 <h2 id="callbacks">Callbacks</h2>
-<pre><code class="ruby language-ruby">class User &lt; ApplicationRecord
-  before_validation :my_callback
-  after_validation do
-    # Callback as a block
-  end
-  end
+<pre><code class="hljs ruby language-ruby"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> &lt; ApplicationRecord</span>
+  before_validation <span class="hljs-symbol">:my_callback</span>
+  after_validation <span class="hljs-keyword">do</span>
+    <span class="hljs-comment"># Callback as a block</span>
+  <span class="hljs-keyword">end</span>
+  <span class="hljs-keyword">end</span>
   private
-    def my_callback
-      # Do something
-    end
-end
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">my_callback</span></span>
+      <span class="hljs-comment"># Do something</span>
+    <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span>
 </code></pre>
 <ul>
 <li><strong>before_validation</strong> is a callback option. For all the available options check<br />
@@ -215,23 +219,23 @@ the webpage</li>
 on the doc page)</li>
 <li>Can be called conditionally (if/unless)</li>
 </ul>
-<pre><code class="ruby language-ruby">  before_validation :my_callback, if: :symbol?
-  # Multiple conditions
-  before_validation :my_callback, if: :symbol?, unless: {}
+<pre><code class="hljs ruby language-ruby">  before_validation <span class="hljs-symbol">:my_callback</span>, <span class="hljs-symbol">if:</span> <span class="hljs-symbol">:symbol?</span>
+  <span class="hljs-comment"># Multiple conditions</span>
+  before_validation <span class="hljs-symbol">:my_callback</span>, <span class="hljs-symbol">if:</span> <span class="hljs-symbol">:symbol?</span>, <span class="hljs-symbol">unless:</span> {}
 </code></pre>
 <h4 id="callback-classes">Callback classes</h4>
 <ul>
 <li>Make the reuse of callback methods possible</li>
 </ul>
-<pre><code class="ruby language-ruby">  class MyCallbacks
-    def self.after_destroy(item)
-      # Do something
-    end
-  end
+<pre><code class="hljs ruby language-ruby">  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyCallbacks</span></span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">self</span>.<span class="hljs-title">after_destroy</span><span class="hljs-params">(item)</span></span>
+      <span class="hljs-comment"># Do something</span>
+    <span class="hljs-keyword">end</span>
+  <span class="hljs-keyword">end</span>
 </code></pre>
-<pre><code class="ruby language-ruby">  class MyClass &lt; ApplicationRecord
+<pre><code class="hljs ruby language-ruby">  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span> &lt; ApplicationRecord</span>
     after_destroy MyCallbacks
-  end
+  <span class="hljs-keyword">end</span>
 </code></pre>
 <ul>
 <li>Note that we declared the method as a class method. If we declare callbacks<br />
@@ -247,26 +251,26 @@ common operations simple</li>
 <li>Sets up a one-to-one connection with another model, such that each instance of<br />
 the model belongs to one instance of the other model</li>
 </ul>
-<pre><code class="ruby language-ruby">  class Book &lt; ApplicationRecord
-    belongs_to :author
-  end
+<pre><code class="hljs ruby language-ruby">  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Book</span> &lt; ApplicationRecord</span>
+    belongs_to <span class="hljs-symbol">:author</span>
+  <span class="hljs-keyword">end</span>
 </code></pre>
 <h4 id="has-one">Has one</h4>
 <ul>
 <li>A one-to-one relationship with different semantics</li>
 </ul>
-<pre><code class="ruby language-ruby">  class Supplier &lt; ApplicationRecord
-    has_one :account
-  end
+<pre><code class="hljs ruby language-ruby">  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Supplier</span> &lt; ApplicationRecord</span>
+    has_one <span class="hljs-symbol">:account</span>
+  <span class="hljs-keyword">end</span>
 </code></pre>
 <h4 id="has-many">Has many</h4>
 <ul>
 <li>Each instance of the model has zero or more instances of the other model</li>
 <li>Similar to belongs_to</li>
 </ul>
-<pre><code class="ruby language-ruby">  class Author &lt; ApplicationRecord
-    has_many :books
-  end
+<pre><code class="hljs ruby language-ruby">  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Author</span> &lt; ApplicationRecord</span>
+    has_many <span class="hljs-symbol">:books</span>
+  <span class="hljs-keyword">end</span>
 </code></pre>
 <h4 id="through">Through</h4>
 <ul>
@@ -274,10 +278,10 @@ the model belongs to one instance of the other model</li>
 when used with has_many</li>
 <li>One to one if used has_one</li>
 </ul>
-<pre><code class="ruby language-ruby">  class Document &lt; ApplicationRecord
-    has_many :sections
-    has_many :paragraphs, through: :sections
-  end
+<pre><code class="hljs ruby language-ruby">  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Document</span> &lt; ApplicationRecord</span>
+    has_many <span class="hljs-symbol">:sections</span>
+    has_many <span class="hljs-symbol">:paragraphs</span>, <span class="hljs-symbol">through:</span> <span class="hljs-symbol">:sections</span>
+  <span class="hljs-keyword">end</span>
 </code></pre>
 <h4 id="polymorphic-associations">Polymorphic associations</h4>
 <ul>
@@ -292,31 +296,31 @@ Employee class but Employees belongs to manager)</li>
 <ul>
 <li>Use modules to create different scopes</li>
 </ul>
-<pre><code class="ruby language-ruby">module MyApplication
-  # Same scope
-  module Business
-    class Supplier &lt; ApplicationRecord
-      has_one :account
-    end
-    class Account &lt; ApplicationRecord
-      belongs_to :Supplier
-    end
-  end
-end
+<pre><code class="hljs ruby language-ruby"><span class="hljs-class"><span class="hljs-keyword">module</span> <span class="hljs-title">MyApplication</span></span>
+  <span class="hljs-comment"># Same scope</span>
+  <span class="hljs-class"><span class="hljs-keyword">module</span> <span class="hljs-title">Business</span></span>
+    <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Supplier</span> &lt; ApplicationRecord</span>
+      has_one <span class="hljs-symbol">:account</span>
+    <span class="hljs-keyword">end</span>
+    <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Account</span> &lt; ApplicationRecord</span>
+      belongs_to <span class="hljs-symbol">:Supplier</span>
+    <span class="hljs-keyword">end</span>
+  <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span>
 </code></pre>
-<pre><code class="ruby language-ruby">module MyApplication
-  # Different scope, must specify full class declaration
-  module Business
-    class Supplier &lt; ApplicationRecord
-      has_one :account, class_name: "MyApplication::Billing::Account"
-    end
-  end
-  module Billing
-    class Account &lt; ApplicationRecord
-      belongs_to :Supplier, class_name: "MyApplication::Business::Supplier"
-    end
-  end
-end
+<pre><code class="hljs ruby language-ruby"><span class="hljs-class"><span class="hljs-keyword">module</span> <span class="hljs-title">MyApplication</span></span>
+  <span class="hljs-comment"># Different scope, must specify full class declaration</span>
+  <span class="hljs-class"><span class="hljs-keyword">module</span> <span class="hljs-title">Business</span></span>
+    <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Supplier</span> &lt; ApplicationRecord</span>
+      has_one <span class="hljs-symbol">:account</span>, <span class="hljs-symbol">class_name:</span> <span class="hljs-string">"MyApplication::Billing::Account"</span>
+    <span class="hljs-keyword">end</span>
+  <span class="hljs-keyword">end</span>
+  <span class="hljs-class"><span class="hljs-keyword">module</span> <span class="hljs-title">Billing</span></span>
+    <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Account</span> &lt; ApplicationRecord</span>
+      belongs_to <span class="hljs-symbol">:Supplier</span>, <span class="hljs-symbol">class_name:</span> <span class="hljs-string">"MyApplication::Business::Supplier"</span>
+    <span class="hljs-keyword">end</span>
+  <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span>
 </code></pre>
 <h3 id="links">Links:</h3>
 <p>http://guides.rubyonrails.org/active<em>record</em>basics.html</p>

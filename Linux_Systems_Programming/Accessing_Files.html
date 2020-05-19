@@ -1,6 +1,10 @@
 <html>
   <head>
     <title>Accessing_Files</title>
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
@@ -9,20 +13,20 @@
 <ul>
 <li>Direct system calls</li>
 </ul>
-<pre><code class="c language-c">fd = open(name, flags, mode)
+<pre><code class="hljs c language-c">fd = <span class="hljs-built_in">open</span>(name, flags, mode)
 </code></pre>
 <p>name - path of the target file</p>
 <p>flags - must include one of O<em>RDONLY, O</em>WRONLY, O<em>RDWR; 
         optional: O</em>APPEND, O<em>CREAT, O</em>TRUNC</p>
 <p>fd - lowest available file descriptor; 0 - keyboard, 1 - stdout, 2 - stderr</p>
-<pre><code class="c language-c">read(fd, buffer, count)
+<pre><code class="hljs c language-c"><span class="hljs-built_in">read</span>(fd, <span class="hljs-built_in">buffer</span>, count)
 
-write(fd, buffer, count)
+<span class="hljs-built_in">write</span>(fd, <span class="hljs-built_in">buffer</span>, count)
 </code></pre>
 <p>buffer - pointer to buffer</p>
 <p>count - size of the buffer</p>
 <h3 id="random-access">Random Access</h3>
-<pre><code class="c language-c">lseek(fd, offset, whence)
+<pre><code class="hljs c language-c">lseek(fd, offset, whence)
 </code></pre>
 <p>offset - a byte offset (can be positive or negative)</p>
 <p>whence - where the offset is relative to; SEEK<em>SET - start of file, SEEK</em>CUR - current position, SEEK_END - end of file</p>
@@ -36,30 +40,30 @@ write(fd, buffer, count)
 <li>Does <em>user space buffering</em><ul>
 <li>Avoids the overhead of system calls</li></ul></li>
 </ul>
-<pre><code class="c language-c">fd = fopen(name, mode)
+<pre><code class="hljs c language-c">fd = fopen(name, mode)
 </code></pre>
 <p>mode - "r" reading, "w" truncate and write, "r+" update</p>
 <p>fd - returns NULL on error</p>
-<pre><code class="c language-c">fread(buffer, size, num, fd)
+<pre><code class="hljs c language-c">fread(<span class="hljs-built_in">buffer</span>, <span class="hljs-built_in">size</span>, num, fd)
 </code></pre>
 <p>size - size of object</p>
 <p>num - number of objects</p>
-<pre><code class="c language-c">fclose(fd)
+<pre><code class="hljs c language-c">fclose(fd)
 </code></pre>
 <ul>
 <li>closes descriptor</li>
 <li>flushes buffer</li>
 </ul>
 <h2 id="formatted-io">Formatted IO</h2>
-<pre><code class="c language-c">printf(format_string, arg1, arg2, ...)
+<pre><code class="hljs c language-c"><span class="hljs-built_in">printf</span>(format_string, arg1, arg2, ...)
 
-// Write to a file
+<span class="hljs-comment">// Write to a file</span>
 fd = fopen(...);
-fprintf(fd, "hello");
+<span class="hljs-built_in">fprintf</span>(fd, <span class="hljs-string">"hello"</span>);
 
-// Formats string into memory
-char[100] buf;
-sprintf(buf, "hello");
+<span class="hljs-comment">// Formats string into memory</span>
+<span class="hljs-keyword">char</span>[<span class="hljs-number">100</span>] buf;
+<span class="hljs-built_in">sprintf</span>(buf, <span class="hljs-string">"hello"</span>);
 </code></pre>
 <h2 id="scatter--gather-io">Scatter / Gather IO</h2>
 <ul>
@@ -67,12 +71,12 @@ sprintf(buf, "hello");
 <li>Atomic</li>
 <li>Impelemented using <code>readv()</code> and <code>wrtitev()</code></li>
 </ul>
-<pre><code class="c language-c">writev(fd, iov, iocount)
+<pre><code class="hljs c language-c">writev(fd, iov, iocount)
 </code></pre>
 <p>iov - an array of iov structures<br />
     - a buffer structure with a base address and length</p>
 <p>iocount - number of buffers</p>
-<pre><code class="c language-c">mmap(addr, length, prot, flags, fd, offset);
+<pre><code class="hljs c language-c">mmap(addr, length, prot, flags, fd, offset);
 </code></pre>
 <ul>
 <li>Map the file into memory to be accessed like an array</li>

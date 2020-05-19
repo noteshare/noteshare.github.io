@@ -1,6 +1,10 @@
 <html>
   <head>
     <title>Control_Flow</title>
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
@@ -9,22 +13,22 @@
 <li>Loops and case (switch) statements</li>
 </ul>
 <h3 id="c-style-for-loop">C style for loop</h3>
-<pre><code class="bash language-bash">for (( INIT; TEST; UPDATE)); do
-    # Do something
-done
+<pre><code class="hljs bash language-bash"><span class="hljs-keyword">for</span> (( INIT; TEST; UPDATE)); <span class="hljs-keyword">do</span>
+    <span class="hljs-comment"># Do something</span>
+<span class="hljs-keyword">done</span>
 
-# e.g.
+<span class="hljs-comment"># e.g.</span>
 
-for (( i=0; i&lt;length; ++i )); do
-    echo ${i}
-done
+<span class="hljs-keyword">for</span> (( i=0; i&lt;length; ++i )); <span class="hljs-keyword">do</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-variable">${i}</span>
+<span class="hljs-keyword">done</span>
 </code></pre>
 <h3 id="case-statements">Case statements</h3>
-<pre><code class="bash language-bash">case WORD in
+<pre><code class="hljs bash language-bash"><span class="hljs-keyword">case</span> WORD <span class="hljs-keyword">in</span>
     PATTERN1)
-        # Do sometihng ;;
+        <span class="hljs-comment"># Do sometihng ;;</span>
     PATTERN2)
-        # Do something;;
+        <span class="hljs-comment"># Do something;;</span>
 </code></pre>
 <ul>
 <li>Add <code>)</code> after each pattern</li>

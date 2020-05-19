@@ -1,6 +1,10 @@
 <html>
   <head>
     <title>Natural_Language_Processing</title>
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
@@ -10,16 +14,16 @@
 <li>Breaking down text to words and sentences</li>
 <li>We can use the nltk library in python to achieve this</li>
 </ul>
-<pre><code class="python language-python">import nltk
-from nltk.tokenize import word_tokenize, sent_tokenize
-# word.tokenize tokenizes the text to individual words
-# sent.tokenize tokenizes the text to individual sentences
-sentence = 'This is my sentence. This is another sentence'
+<pre><code class="hljs python language-python"><span class="hljs-keyword">import</span> nltk
+<span class="hljs-keyword">from</span> nltk.tokenize <span class="hljs-keyword">import</span> word_tokenize, sent_tokenize
+<span class="hljs-comment"># word.tokenize tokenizes the text to individual words</span>
+<span class="hljs-comment"># sent.tokenize tokenizes the text to individual sentences</span>
+sentence = <span class="hljs-string">'This is my sentence. This is another sentence'</span>
 sents = sent_tokenzie(sentence)
-# This gives ['This is my sentence.', 'This is another sentence']
+<span class="hljs-comment"># This gives ['This is my sentence.', 'This is another sentence']</span>
 words = word_tokenize(sentence)
-# This gives ['This', 'is', 'my', 'sentence', '.', 'This', 'is', 'another', 'sentence']
-# Punctuations are also tokenized into individual words
+<span class="hljs-comment"># This gives ['This', 'is', 'my', 'sentence', '.', 'This', 'is', 'another', 'sentence']</span>
+<span class="hljs-comment"># Punctuations are also tokenized into individual words</span>
 </code></pre>
 <h2 id="stopword-removal">Stopword Removal</h2>
 <ul>
@@ -27,16 +31,16 @@ words = word_tokenize(sentence)
 <li>They can be removed berfore we start to extract meaning from the text</li>
 <li>We can get the list of stopwords from the nltk library</li>
 </ul>
-<pre><code class="python language-python">from nltk.corpus import stopwords
-from string import punctuation
+<pre><code class="hljs python language-python"><span class="hljs-keyword">from</span> nltk.corpus <span class="hljs-keyword">import</span> stopwords
+<span class="hljs-keyword">from</span> string <span class="hljs-keyword">import</span> punctuation
 
-customStopWords = set(stopwords.words('english') + list(punctuation))
+customStopWords = set(stopwords.words(<span class="hljs-string">'english'</span>) + list(punctuation))
 </code></pre>
 <h2 id="n-grams">N-Grams</h2>
 <ul>
 <li>Words that has a special meaning when grouped together (e.g. New York is a bigram)</li>
 </ul>
-<pre><code class="python language-python">from nltk.collocations import *
+<pre><code class="hljs python language-python"><span class="hljs-keyword">from</span> nltk.collocations <span class="hljs-keyword">import</span> *
 bigram_measures = nltk.collocations.BigramAssocMeasures()
 finder = BigramCollocationFinder.from_words(wordsWOStopwords)
 sorted(finder.ngram_fd.items())
@@ -46,15 +50,15 @@ sorted(finder.ngram_fd.items())
 <li>Identify the meaning of the word depending on the context<ul>
 <li>e.g. the word cool</li></ul></li>
 </ul>
-<pre><code class="python language-python">from nltk.wsd import lesk
-sense = lesk(word_tokenize("Sing in a lower tone, along with the bass"), "bass", "bass")
-# (Synset('bass.n.07'), u'the member of the lowest range of a family of musical instruments')
+<pre><code class="hljs python language-python"><span class="hljs-keyword">from</span> nltk.wsd <span class="hljs-keyword">import</span> lesk
+sense = lesk(word_tokenize(<span class="hljs-string">"Sing in a lower tone, along with the bass"</span>), <span class="hljs-string">"bass"</span>, <span class="hljs-string">"bass"</span>)
+<span class="hljs-comment"># (Synset('bass.n.07'), u'the member of the lowest range of a family of musical instruments')</span>
 </code></pre>
 <h2 id="parts-of-speech">Parts-of-speech</h2>
 <ul>
 <li>Identify the role of a word within the text (noun, verb, adj etc.)</li>
 </ul>
-<pre><code class="python language-python">ntlk.pos_tag(word_tokenize(text))
+<pre><code class="hljs python language-python">ntlk.pos_tag(word_tokenize(text))
 </code></pre>
 <ul>
 <li>Check the nltk documentation for details in formatting</li>
@@ -65,9 +69,9 @@ sense = lesk(word_tokenize("Sing in a lower tone, along with the bass"), "bass",
 <li>close vs. closed</li></ul></li>
 <li>Can use the lancaster stemming library</li>
 </ul>
-<pre><code class="python language-python">from nltk.stem.lancaster import LancasterStemmer
+<pre><code class="hljs python language-python"><span class="hljs-keyword">from</span> nltk.stem.lancaster <span class="hljs-keyword">import</span> LancasterStemmer
 st = LancasterStemmer()
-stemmedWords = [st.stem(word) for word in word_tokenize(text)]
+stemmedWords = [st.stem(word) <span class="hljs-keyword">for</span> word <span class="hljs-keyword">in</span> word_tokenize(text)]
 </code></pre>
 <h1 id="clustering">Clustering</h1>
 <ul>

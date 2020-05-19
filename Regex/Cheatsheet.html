@@ -1,6 +1,10 @@
 <html>
   <head>
     <title>Cheatsheet</title>
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
@@ -21,7 +25,7 @@
 <h2 id="branching">Branching</h2>
 <p><code>|</code> - OR, can be used to match two sets of patterns</p>
 <p>e.g. Matches HTML colour codes of length 3 and 6</p>
-<pre><code>    #?([A-F0-9]{6}|[A-F0-9]{3})
+<pre><code class="hljs">    #?([A-F0<span class="hljs-number">-9</span>]{<span class="hljs-number">6</span>}|[A-F0<span class="hljs-number">-9</span>]{<span class="hljs-number">3</span>})
 </code></pre>
 <ul>
 <li>Has the lowest precedence of all operators</li>

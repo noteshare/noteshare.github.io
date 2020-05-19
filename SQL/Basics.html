@@ -1,6 +1,10 @@
 <html>
   <head>
     <title>Basics</title>
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
@@ -9,34 +13,34 @@
 <li>Insert into specific colums, order does not matter</li>
 <li>id can be omitted as it is the primary key</li>
 </ul>
-<pre><code class="sql language-sql">INSERT INTO my_table(id, col_name1, col_name2)
-VALUES(2, 'some word', 'some word');
+<pre><code class="hljs sql language-sql"><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> my_table(<span class="hljs-keyword">id</span>, col_name1, col_name2)
+<span class="hljs-keyword">VALUES</span>(<span class="hljs-number">2</span>, <span class="hljs-string">'some word'</span>, <span class="hljs-string">'some word'</span>);
 </code></pre>
 <ul>
 <li>Insert into entire row</li>
 <li>column names can be omitted, but values must be in order</li>
 </ul>
-<pre><code class="sql language-sql">INSERT INTO my_table
-VALUES(2, 'some word', 'some word')
+<pre><code class="hljs sql language-sql"><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> my_table
+<span class="hljs-keyword">VALUES</span>(<span class="hljs-number">2</span>, <span class="hljs-string">'some word'</span>, <span class="hljs-string">'some word'</span>)
 </code></pre>
 <h2 id="update">Update</h2>
 <ul>
 <li>Change one column</li>
 </ul>
-<pre><code class="sql language-sql">UPDATE my_table
-SET col_1 = 'new value'
-WHERE id = 5;
+<pre><code class="hljs sql language-sql"><span class="hljs-keyword">UPDATE</span> my_table
+<span class="hljs-keyword">SET</span> col_1 = <span class="hljs-string">'new value'</span>
+<span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">id</span> = <span class="hljs-number">5</span>;
 </code></pre>
 <ul>
 <li>Change multiple columns</li>
 </ul>
-<pre><code class="sql language-sql">UPDATE my_table
-SET col_1 = 'new value', col_2 = 'new value'
-WHERE id = 5;
+<pre><code class="hljs sql language-sql"><span class="hljs-keyword">UPDATE</span> my_table
+<span class="hljs-keyword">SET</span> col_1 = <span class="hljs-string">'new value'</span>, col_2 = <span class="hljs-string">'new value'</span>
+<span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">id</span> = <span class="hljs-number">5</span>;
 </code></pre>
 <h2 id="delete">Delete</h2>
-<pre><code class="sql language-sql">DELETE from my_table
-WHERE id = 3 OR id = 4
+<pre><code class="hljs sql language-sql"><span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">from</span> my_table
+<span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">id</span> = <span class="hljs-number">3</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">id</span> = <span class="hljs-number">4</span>
 </code></pre>
 <ul>
 <li>Usually used with a where statement</li>

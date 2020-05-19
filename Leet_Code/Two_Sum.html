@@ -1,16 +1,20 @@
 <html>
   <head>
     <title>Two_Sum</title>
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
     <div id='content'><h1 id="two-sum-easy">Two Sum (easy)</h1>
 <p>Given an array of integers, return indices of the two numbers such that they add up to a specific target.</p>
 <p>You may assume that each input would have exactly one solution, and you may not use the same element twice.</p>
-<pre><code>Given nums = [2, 7, 11, 15], target = 9,
+<pre><code class="hljs">Given nums = [<span class="hljs-number">2</span>, <span class="hljs-number">7</span>, <span class="hljs-number">11</span>, <span class="hljs-number">15</span>], target = <span class="hljs-number">9</span>,
 
-Because nums[0] + nums[1] = 2 + 7 = 9,
-return [0, 1].
+Because nums[<span class="hljs-number">0</span>] + nums[<span class="hljs-number">1</span>] = <span class="hljs-number">2</span> + <span class="hljs-number">7</span> = <span class="hljs-number">9</span>,
+<span class="hljs-keyword">return</span> [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>].
 </code></pre>
 <h2 id="solution">Solution</h2>
 <ul>
@@ -18,20 +22,20 @@ return [0, 1].
 <li>Tells you what value the number of the current index needs in order to reach the target value</li></ul></li>
 <li>Lookback while inserting numbers into the hashtable</li>
 </ul>
-<pre><code class="cpp language-cpp">class Solution {
-public:
-    vector&lt;int&gt; twoSum(vector&lt;int&gt;&amp; nums, int target) {
-        unordered_map&lt;int, int&gt; hash;
-        vector&lt;int&gt; results;
-        for(int i = 0; i &lt; nums.size(); i++) {
-            if (hash.find(nums[i]) != hash.end()) {
+<pre><code class="hljs cpp language-cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">twoSum</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums, <span class="hljs-keyword">int</span> target)</span> </span>{
+        <span class="hljs-built_in">unordered_map</span>&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; hash;
+        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; results;
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; nums.size(); i++) {
+            <span class="hljs-keyword">if</span> (hash.find(nums[i]) != hash.end()) {
                 results.push_back(hash[nums[i]]);
                 results.push_back(i);
-                break;
+                <span class="hljs-keyword">break</span>;
             }
             hash[target - nums[i]] = i;
         }
-        return results;
+        <span class="hljs-keyword">return</span> results;
     }
 };
 </code></pre>

@@ -1,6 +1,10 @@
 <html>
   <head>
     <title>Solutions</title>
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
@@ -10,28 +14,28 @@
 <ul>
 <li>Optimized multiple pops by leaving the two stacks as they are before push is called</li>
 </ul>
-<pre><code>    pseudo code
+<pre><code class="hljs">    pseudo code
 
-    stack new // newest item on top
-    stack old // oldest item on top
+    stack <span class="hljs-built_in">new</span> // newest item <span class="hljs-keyword">on</span> top
+    stack <span class="hljs-built_in">old</span> // oldest item <span class="hljs-keyword">on</span> top
 
-    function pop() {
-        if new.isEmpty() &amp;&amp; old.isEmpty {
-            // base case: return null
-        } else if !new.isEmpty() &amp;&amp; old.isEmpty() {
-            // pop every item from new and push onto old, then pop top item from old
-        } else if new.isEmpty() &amp;&amp; !old.isEmpty() {
-            // pop from old and return item
-        } else {
-            // return error, this case can be ignored
+    <span class="hljs-keyword">function</span> pop() {
+        <span class="hljs-keyword">if</span> <span class="hljs-built_in">new</span>.isEmpty() &amp;&amp; <span class="hljs-built_in">old</span>.isEmpty {
+            // base <span class="hljs-keyword">case</span>: <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> !<span class="hljs-built_in">new</span>.isEmpty() &amp;&amp; <span class="hljs-built_in">old</span>.isEmpty() {
+            // pop every item <span class="hljs-keyword">from</span> <span class="hljs-built_in">new</span> <span class="hljs-keyword">and</span> push onto <span class="hljs-built_in">old</span>, <span class="hljs-keyword">then</span> pop top item <span class="hljs-keyword">from</span> <span class="hljs-built_in">old</span>
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> <span class="hljs-built_in">new</span>.isEmpty() &amp;&amp; !<span class="hljs-built_in">old</span>.isEmpty() {
+            // pop <span class="hljs-keyword">from</span> <span class="hljs-built_in">old</span> <span class="hljs-keyword">and</span> <span class="hljs-keyword">return</span> item
+        } <span class="hljs-keyword">else</span> {
+            // <span class="hljs-keyword">return</span> error, this <span class="hljs-keyword">case</span> can be ignored
         }
     }
 
-    function push() {
-        if new.isEmpty() &amp;&amp; !old.isEmpty() {
-            // push every item from old and push onto new, then push onto new
-        } else {
-            // push onto new
+    <span class="hljs-keyword">function</span> push() {
+        <span class="hljs-keyword">if</span> <span class="hljs-built_in">new</span>.isEmpty() &amp;&amp; !<span class="hljs-built_in">old</span>.isEmpty() {
+            // push every item <span class="hljs-keyword">from</span> <span class="hljs-built_in">old</span> <span class="hljs-keyword">and</span> push onto <span class="hljs-built_in">new</span>, <span class="hljs-keyword">then</span> push onto <span class="hljs-built_in">new</span>
+        } <span class="hljs-keyword">else</span> {
+            // push onto <span class="hljs-built_in">new</span>
         }
     }
 </code></pre>
@@ -41,27 +45,27 @@
 <li>Insertion sort</li>
 <li>Assume temp. variable is allowed</li>
 </ul>
-<pre><code>    //pseudo code
+<pre><code class="hljs">    <span class="hljs-comment">//pseudo code</span>
     stack original
     stack sorted
 
-    while (!original.isEmpty()) {
-        temp = original.pop()
-        if (sorted.isEmpty() || sorted.peek() &gt;= temp) {
-            // base case
-            sorted.push(temp)
-        } else {
-            itemsMoved = 0 // counter
-            // push every item that is larger than the current sorted item onto the old stack
-            while (!sorted.isEmpty() &amp;&amp; sorted.peek() &lt; temp) {
-                original.push(sorted.pop())
+    <span class="hljs-keyword">while</span> (!original.isEmpty()) {
+        temp = original.<span class="hljs-keyword">pop</span>()
+        <span class="hljs-keyword">if</span> (sorted.isEmpty() || sorted.peek() &gt;= temp) {
+            <span class="hljs-comment">// base case</span>
+            sorted.<span class="hljs-keyword">push</span>(temp)
+        } <span class="hljs-keyword">else</span> {
+            itemsMoved = <span class="hljs-number">0</span> <span class="hljs-comment">// counter</span>
+            <span class="hljs-comment">// push every item that is larger than the current sorted item onto the old stack</span>
+            <span class="hljs-keyword">while</span> (!sorted.isEmpty() &amp;&amp; sorted.peek() &lt; temp) {
+                original.<span class="hljs-keyword">push</span>(sorted.<span class="hljs-keyword">pop</span>())
                 itemsMoved++
             }
-            // insert the item
-            sorted.push(temp)
-            // push the temporary items in the old stack back onto the sorted stack
-            while (itemsMoved &gt; 0) {
-                sorted.push(original.pop())
+            <span class="hljs-comment">// insert the item</span>
+            sorted.<span class="hljs-keyword">push</span>(temp)
+            <span class="hljs-comment">// push the temporary items in the old stack back onto the sorted stack</span>
+            <span class="hljs-keyword">while</span> (itemsMoved &gt; <span class="hljs-number">0</span>) {
+                sorted.<span class="hljs-keyword">push</span>(original.<span class="hljs-keyword">pop</span>())
                 itemsMoved--
             }
         }
@@ -125,11 +129,11 @@
 <ul>
 <li>There is a max and min range for each of the nodes in the tree</li>
 </ul>
-<pre><code>        5
+<pre><code class="hljs">        <span class="hljs-number">5</span>
        / \
-      3   6
+      <span class="hljs-number">3</span>   <span class="hljs-number">6</span>
      / \ 
-    2   4 
+    <span class="hljs-number">2</span>   <span class="hljs-number">4</span> 
 </code></pre>
 <p>e.g. <br />
 The immediate left child (where 3 is) has a range between (-infinity, 5]<br />
@@ -216,9 +220,9 @@ My solution:</p></li>
 <li>Can use pre-order traversal to concatentate the string</li>
 <li>A way is needed to determine empty leaves, or else the following case will be non-deterministic</li>
 </ul>
-<pre><code>         a       a
+<pre><code class="hljs">         <span class="hljs-selector-tag">a</span>       <span class="hljs-selector-tag">a</span>
        /           \
-      b              b
+      <span class="hljs-selector-tag">b</span>              <span class="hljs-selector-tag">b</span>
 </code></pre>
 <ul>
 <li>This can be solved by use special markers to indicate empty nodes. Such as 'X' if we assume it is an integer tree</li>
@@ -269,13 +273,13 @@ My solution:</p></li>
 <ul>
 <li>8 * 9 can be broken down to a tree consists of</li>
 </ul>
-<pre><code>                    8*9
+<pre><code class="hljs">                    <span class="hljs-number">8</span>*<span class="hljs-number">9</span>
                    /   \
-                4*9     4*9
+                <span class="hljs-number">4</span>*<span class="hljs-number">9</span>     <span class="hljs-number">4</span>*<span class="hljs-number">9</span>
               /     \  /    \
-            2*9   2*9 2*9    2*9
+            <span class="hljs-number">2</span>*<span class="hljs-number">9</span>   <span class="hljs-number">2</span>*<span class="hljs-number">9</span> <span class="hljs-number">2</span>*<span class="hljs-number">9</span>    <span class="hljs-number">2</span>*<span class="hljs-number">9</span>
            /  \ /  \  / \   /   \
-          9   9 9  9  9  9  9    9
+          <span class="hljs-number">9</span>   <span class="hljs-number">9</span> <span class="hljs-number">9</span>  <span class="hljs-number">9</span>  <span class="hljs-number">9</span>  <span class="hljs-number">9</span>  <span class="hljs-number">9</span>    <span class="hljs-number">9</span>
 </code></pre>
 <ul>
 <li>A recusive algorithm can be constructed using division and addition</li>

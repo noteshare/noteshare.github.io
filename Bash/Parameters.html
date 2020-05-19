@@ -1,6 +1,10 @@
 <html>
   <head>
     <title>Parameters</title>
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
@@ -17,7 +21,7 @@
 <li>More preferable to use</li>
 </ul>
 <h3 id="getopts">getopts</h3>
-<pre><code class="bash language-bash">shift $(( OPTIND -1 ))
+<pre><code class="hljs bash language-bash"><span class="hljs-built_in">shift</span> $(( OPTIND -1 ))
 </code></pre>
 <ul>
 <li>Use this after handling getopts options to parse the rest of the arguments manually</li>

@@ -1,6 +1,10 @@
 <html>
   <head>
     <title>Rails_Basics</title>
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
@@ -10,11 +14,11 @@
 </ul>
 <h2 id="starting-a-project">Starting a Project</h2>
 <h4 id="creating-a-new-project">Creating a new Project</h4>
-<pre><code>  rails new &lt;project_name&gt;
+<pre><code class="hljs">  rails <span class="hljs-keyword">new</span> <span class="hljs-type"></span>&lt;project_name&gt;
 </code></pre>
 <h4 id="controller">Controller</h4>
 <p>Create a new Controller</p>
-<pre><code>  rails generate controller &lt;controller_name&gt;
+<pre><code class="hljs">  rails <span class="hljs-keyword">generate</span> controller &lt;controller_name&gt;
 </code></pre>
 <ul>
 <li>Controller source file locatedat app/controllers/controller_name.rb</li>
@@ -25,7 +29,7 @@ with it</li>
 </ul>
 <h4 id="model">Model</h4>
 <p>Create a Model</p>
-<pre><code>  rails generate model &lt;model_name&gt; &lt;attr_1_name&gt;:&lt;type&gt; &lt;attr_2_name&gt;:&lt;type&gt;
+<pre><code class="hljs">  rails <span class="hljs-keyword">generate</span> model &lt;model_name&gt; &lt;attr_1_name&gt;:&lt;<span class="hljs-keyword">type</span>&gt; &lt;attr_2_name&gt;:&lt;<span class="hljs-keyword">type</span>&gt;
 </code></pre>
 <ul>
 <li>Creates the table of the model and add the given attributes to the table</li>
@@ -34,7 +38,7 @@ with it</li>
 <p>Link:</p>
 <p>http://guides.rubyonrails.org/active<em>record</em>migrations.html</p>
 <h4 id="rendering">Rendering</h4>
-<pre><code>  &lt;%= link_to 'link_text', controller: 'controller_name' %&gt;
+<pre><code class="hljs">  &lt;%= link_to <span class="hljs-string">'link_text'</span>, controller: <span class="hljs-string">'controller_name'</span> %&gt;
 </code></pre>
 <ul>
 <li>Creates a link to the corresponding view of the specified controller<br />
