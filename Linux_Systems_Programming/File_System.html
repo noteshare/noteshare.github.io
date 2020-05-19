@@ -1,0 +1,325 @@
+<html>
+  <head>
+    <title>File_System</title>
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div id='content'><h1 id="file-system">File System</h1>
+<ul>
+<li><p>inode - a datastructure that holds the file's attribtues (permission, owner, timestamp etc.)</p></li>
+<li><p>directory contains links to inodes (refererenced by filename and inode number)</p></li>
+</ul>
+<pre><code class="hljs c language-c">stat(name, buf)
+</code></pre>
+<p>name - pathname of the file to be opened</p>
+<p>buf - pointer to a stat structure</p>
+<pre><code class="hljs c language-c">fstat(fd, buf)
+</code></pre>
+<p>fd - open file descriptor</p>
+<ul>
+<li><p>returns 0 on success -1 on failure</p></li>
+<li><p><a href="http://codewiki.wikidot.com/c:struct-stat">Details on struct stat</a></p></li>
+</ul>
+<h2 id="file-types-and-permission">File Types and Permission</h2>
+<ul>
+<li><p>Information on the file type and permission is stored in the <code>st_mode</code> field in the stat structure</p></li>
+<li><p>The status of a particular file permission can be obtained from bitwise and with the bit mask</p>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/cpp/c-runtime-library/stat-structure-st-mode-field-constants?view=vs-2019">Details</a></li></ul></li>
+</ul>
+<h2 id="creating-files">Creating Files</h2>
+<pre><code class="hljs c language-c"><span class="hljs-built_in">open</span>(name, flags, mode)
+
+creat(name, mode)
+</code></pre>
+<p>name - path name</p>
+<p>flags - includes <code>O_CREAT</code></p>
+<p>mode - access mode of the file</p>
+<h2 id="links">Links</h2>
+<ul>
+<li>Associates a name to an inode number</li>
+</ul>
+<pre><code class="hljs c language-c">link(oldname, newname); <span class="hljs-comment">// Gives the file an additional name</span>
+
+unlink(name); <span class="hljs-comment">// If this is the last remaining link the file is deleted</span>
+</code></pre>
+<ul>
+<li><p>There can be more than one link to a file</p></li>
+<li><p>Additional links cannot be created to directories</p></li>
+</ul>
+<h2 id="symlinks">Symlinks</h2>
+<ul>
+<li><p>A symbolic link is a small file that contains the name of another file</p>
+<ul>
+<li>Has its own inode</li></ul></li>
+<li><p>Can link to directories</p></li>
+<li><p>Can link across file system boundries</p></li>
+<li><p>Associates a name with another name</p></li>
+</ul>
+<pre><code class="hljs c language-c">symlink(oldname, newname);
+
+unlink(name); <span class="hljs-comment">// only the symlink is removed, not the file</span>
+</code></pre>
+<ul>
+<li>Some system calls follow symbolic links<ul>
+<li>e.g. <code>open()</code>, <code>read()</code>, <code>write()</code></li>
+<li>some calls such as <code>unlink()</code> do not</li></ul></li>
+</ul>
+<h2 id="directory-traversal">Directory Traversal</h2>
+<h3 id="current-directory">Current Directory</h3>
+<pre><code class="hljs c language-c">getcwd(buf, <span class="hljs-built_in">size</span>);
+</code></pre>
+<ul>
+<li>Get the current directory path</li>
+</ul>
+<p>buf - where the result will be returned (pathname)</p>
+<p>size - size of the buffer (usually use <code>PATH_MAX</code>)</p>
+<pre><code class="hljs c language-c">chdir(pathname);
+</code></pre>
+<ul>
+<li>Change the current directory</li>
+</ul>
+<p>pathname - path name of the new current directory</p>
+<pre><code class="hljs c language-c"><span class="hljs-built_in">mkdir</span>(name, mode);
+</code></pre>
+<ul>
+<li>Create <em>one</em> directory</li>
+</ul>
+<pre><code class="hljs c language-c"><span class="hljs-built_in">rmdir</span>(name);
+</code></pre>
+<ul>
+<li>Remove the directory</li>
+</ul>
+<h3 id="reading-directories">Reading Directories</h3>
+<pre><code class="hljs c language-c">d = opendir(dirname); <span class="hljs-comment">// Open the directory</span>
+
+info = readdir(d); <span class="hljs-comment">// Read one file in the directory</span>
+</code></pre>
+<ul>
+<li>Needs a loop to read all files in the directory</li>
+</ul>
+<h2 id="monitor-file-system-events">Monitor File System Events</h2>
+<ul>
+<li><p>The inotify API is used for this purpose</p></li>
+<li><p>Not a recursive process</p></li>
+</ul>
+<h3 id="initialization">Initialization</h3>
+<pre><code class="hljs c language-c">fd = inotify_init(); <span class="hljs-comment">// Create a inotify instance</span>
+</code></pre>
+<ul>
+<li>Returns a file descriptor that we can later access by using <code>read()</code></li>
+</ul>
+<h3 id="create-a-watch-item">Create a watch item</h3>
+<pre><code class="hljs c language-c">wd = inotify_add_watch(fd, path, mask); <span class="hljs-comment">// Add a watch item</span>
+</code></pre>
+<p>fd - file descriptor of the inotify instance</p>
+<p>path - name of file or directory to be watched</p>
+<p>mask - bit mask specifying the events to be monitored (<a href="http://man7.org/linux/man-pages/man7/inotify.7.html">Check here</a>)</p>
+<ul>
+<li>Returns a watch descriptor</li>
+</ul>
+<h3 id="read-events">Read events</h3>
+<pre><code class="hljs c language-c">n = <span class="hljs-built_in">read</span>(fd, buf, <span class="hljs-built_in">size</span>);
+</code></pre>
+<p>fd - file descriptor of the inotify instance</p>
+<p>buf - buffer that the <a href="http://www.qnx.com/developers/docs/qnxcar2/index.jsp?topic=%2Fcom.qnx.doc.neutrino.lib_ref%2Ftopic%2Fi%2Finotify_event.html">inotify_event structure</a> will be written to</p>
+<ul>
+<li><p>The records can be of variable length</p></li>
+<li><p>Blocks until an event occurs</p></li>
+<li><p>Can return more than one events</p></li>
+</ul>
+
+    </div>
+    <style type='text/css'>body {
+  font: 400 16px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #111;
+  background-color: #fdfdfd;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-feature-settings: "kern" 1;
+  -moz-font-feature-settings: "kern" 1;
+  -o-font-feature-settings: "kern" 1;
+  font-feature-settings: "kern" 1;
+  font-kerning: normal;
+  padding: 30px;
+}
+
+@media only screen and (max-width: 600px) {
+  body {
+    padding: 5px;
+  }
+
+  body > #content {
+    padding: 0px 20px 20px 20px !important;
+  }
+}
+
+body > #content {
+  margin: 0px;
+  max-width: 900px;
+  border: 1px solid #e1e4e8;
+  padding: 10px 40px;
+  padding-bottom: 20px;
+  border-radius: 2px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+hr {
+  color: #bbb;
+  background-color: #bbb;
+  height: 1px;
+  flex: 0 1 auto;
+  margin: 1em 0;
+  padding: 0;
+  border: none;
+}
+
+/**
+ * Links
+ */
+a {
+  color: #0366d6;
+  text-decoration: none; }
+  a:visited {
+    color: #0366d6; }
+  a:hover {
+    color: #0366d6;
+    text-decoration: underline; }
+
+pre {
+  background-color: #f6f8fa;
+  border-radius: 3px;
+  font-size: 85%;
+  line-height: 1.45;
+  overflow: auto;
+  padding: 16px;
+}
+
+/**
+  * Code blocks
+  */
+
+code {
+  background-color: rgba(27,31,35,.05);
+  border-radius: 3px;
+  font-size: 85%;
+  margin: 0;
+  word-wrap: break-word;
+  padding: .2em .4em;
+  /* Override highlight.js font */
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+}
+
+pre > code {
+  background-color: transparent;
+  border: 0;
+  display: inline;
+  line-height: inherit;
+  margin: 0;
+  overflow: visible;
+  padding: 0;
+  word-wrap: normal;
+  font-size: 100%;
+}
+
+
+/**
+ * Blockquotes
+ */
+blockquote {
+  margin-left: 30px;
+  margin-top: 0px;
+  margin-bottom: 16px;
+  border-left-width: 3px;
+  padding: 0 1em;
+  color: #828282;
+  border-left: 4px solid #e8e8e8;
+  padding-left: 15px;
+  font-size: 18px;
+  letter-spacing: -1px;
+  font-style: italic;
+}
+blockquote * {
+  font-style: normal !important;
+  letter-spacing: 0;
+  color: #6a737d !important;
+}
+
+/**
+ * Tables
+ */
+table {
+  border-spacing: 2px;
+  display: block;
+  font-size: 14px;
+  overflow: auto;
+  width: 100%;
+  margin-bottom: 16px;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+td {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+th {
+  font-weight: 600;
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+tr {
+  background-color: #fff;
+  border-top: 1px solid #c6cbd1;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+/**
+ * Others
+ */
+
+img {
+  max-width: 100%;
+}
+
+p {
+  line-height: 24px;
+  font-weight: 400;
+  font-size: 16px;
+  color: #24292e; }
+
+ul {
+  margin-top: 0; }
+
+li {
+  color: #24292e;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5; }
+
+li + li {
+  margin-top: 0.25em; }
+
+a:visited {
+  color: #0366d6; }
+
+h1, h2, h3 {
+  border-bottom: 1px solid #eaecef;
+  color: #111;
+  /* Darker */ }
+
+.hljs {
+    /* Hide to show github style background */
+    background-color: transparent !important;
+}</style>
+  </body>
+</html>
