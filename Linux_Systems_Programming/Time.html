@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>README</title>
+    <title>Time</title>
     <link rel="stylesheet"
       href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
@@ -8,11 +8,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
-    <div id='content'><h1 id="linux-systems-programming">Linux Systems Programming</h1>
-<p><a href="Basics.html">Basics</a></p>
-<p><a href="Time.html">Time</a></p>
-<p><a href="Accessing_Files.html">Accessing Files</a></p>
-<p><a href="File_System.html">File System</a></p>
+    <div id='content'><h1 id="time">Time</h1>
+<pre><code class="hljs c language-c">time(<span class="hljs-literal">NULL</span>); <span class="hljs-comment">// Returns the number of seconds since the epoch (12:00am, 1 Jan 1970 UTC)</span>
+</code></pre>
+<h3 id="broken-down-time">Broken down time</h3>
+<pre><code class="hljs c language-c">gmtime(t); <span class="hljs-comment">// UTC</span>
+
+localtime(t); <span class="hljs-comment">// Local time zone</span>
+</code></pre>
+<ul>
+<li>returns a <code>struct tm</code>; <a href="http://www.cplusplus.com/reference/ctime/tm/">Details here.</a></li>
+</ul>
+<h3 id="human-readable-time">Human Readable Time</h3>
+<pre><code class="hljs c language-c">ctime(t);
+</code></pre>
+<ul>
+<li>returns a human readable string; no control over format</li>
+</ul>
+<h3 id="process-time">Process Time</h3>
+<pre><code class="hljs c language-c">times(buf);
+</code></pre>
+<ul>
+<li><p>Returns a <code>struct tms</code>; <a href="http://www.cplusplus.com/reference/ctime/tm/">Details here.</a></p></li>
+<li><p>user time - time spent executing instruction in user space</p></li>
+<li><p>system time - time spent executing on the kernel on behalf of the process</p></li>
+</ul>
 
     </div>
     <style type='text/css'>body {
