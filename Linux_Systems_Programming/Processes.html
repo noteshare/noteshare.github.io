@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>README</title>
+    <title>Processes</title>
     <link rel="stylesheet"
       href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
@@ -8,12 +8,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
-    <div id='content'><h1 id="linux-systems-programming">Linux Systems Programming</h1>
-<p><a href="Basics.html">Basics</a></p>
-<p><a href="Time.html">Time</a></p>
-<p><a href="Accessing_Files.html">Accessing Files</a></p>
-<p><a href="Processes.html">Processes</a></p>
-<p><a href="File_System.html">File System</a></p>
+    <div id='content'><h1 id="processes">Processes</h1>
+<ul>
+<li><p>A process contains</p>
+<ul>
+<li>Process ID (PID)</li>
+<li>Real User Idea - the user that is running the process</li>
+<li>Effective User ID - defines the permission that it carries</li>
+<li>Current directory</li>
+<li>Priority</li>
+<li>Environment (variables)</li>
+<li>Open streams - e.g. file descriptors from open</li>
+<li>Signal Dipositions - configs regarding how to process signals</li>
+<li>Memory regions</li></ul></li>
+<li><p>Process memory</p>
+<ul>
+<li>Heap - hold dynamic data structures</li>
+<li>Stack - hold local variable of function; last in first out</li>
+<li>Data - hold global / static variables</li>
+<li>Code - code that the program is runing</li></ul></li>
+</ul>
+<h2 id="process-creation">Process Creation</h2>
+<pre><code class="hljs c language-c">fork();
+</code></pre>
+<ul>
+<li><p>In parent, the function returns the PID of child</p></li>
+<li><p>In the child, the function returns 0</p></li>
+<li><p>The child inherits copies of most things from the parent, except:</p>
+<ul>
+<li>It shares the code with the parent</li>
+<li>It is assigned a new PID</li></ul></li>
+</ul>
+<h2 id="executing-a-program">Executing a Program</h2>
+<pre><code class="hljs c language-c">exec();
+</code></pre>
+<ul>
+<li><p>Causes the current execution of a process to be replaced by the image of a new program</p></li>
+<li><p>Does not return on succeed</p></li>
+<li><p>There are 7 different variations of <code>exec()</code> with different usecases; <a href="http://man7.org/linux/man-pages/man3/exec.3.html">Details here</a>.</p></li>
+</ul>
+<h2 id="termination">Termination</h2>
+<pre><code class="hljs c language-c"><span class="hljs-built_in">exit</span>(n);
+</code></pre>
+<ul>
+<li>Exit process; passes back to parent</li>
+</ul>
+<p>n - exit status</p>
+<pre><code class="hljs c language-c"><span class="hljs-keyword">int</span> status;
+wait(&amp;status);
+</code></pre>
+<ul>
+<li>Call waits until a child process terminates. Returns PID of the child.</li>
+<li>The child exit status is returned here. Pass 0 (NULL) if not interested</li>
+</ul>
 
     </div>
     <style type='text/css'>body {
