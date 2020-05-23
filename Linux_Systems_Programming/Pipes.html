@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>README</title>
+    <title>Pipes</title>
     <link rel="stylesheet"
       href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
@@ -8,13 +8,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
-    <div id='content'><h1 id="linux-systems-programming">Linux Systems Programming</h1>
-<p><a href="Basics.html">Basics</a></p>
-<p><a href="Time.html">Time</a></p>
-<p><a href="Accessing_Files.html">Accessing Files</a></p>
-<p><a href="Pipes.html">Pipes</a></p>
-<p><a href="Processes.html">Processes</a></p>
-<p><a href="File_System.html">File System</a></p>
+    <div id='content'><h1 id="pipes">Pipes</h1>
+<h2 id="anonymous-pipes">Anonymous Pipes</h2>
+<ul>
+<li>Provid ebuffering and loose synchronization between the producer (upstream), and consumer (downstream)<ul>
+<li>Producer blocks when writing to a fuill pipe</li>
+<li>Consumer blocks when reading an empty pipe</li>
+<li>Consumer receives EOF when upstream is closed</li></ul></li>
+</ul>
+<pre><code class="hljs c language-c"><span class="hljs-keyword">int</span> p[<span class="hljs-number">2</span>];
+pipe(p);
+</code></pre>
+<ul>
+<li><p>Returns 0 on success and -1 on error</p></li>
+<li><p><code>p[1]</code> is the input of the pipe; <code>p[2]</code> is the output</p></li>
+</ul>
+<h2 id="copying-file-descriptors">Copying File Descriptors</h2>
+<pre><code class="hljs c language-c">dup(fd);
+</code></pre>
+<ul>
+<li>Copies <code>fd</code> onto the lowest available descriptor</li>
+</ul>
+<pre><code class="hljs c language-c">dup2(fd1, fd2);
+</code></pre>
+<ul>
+<li>Copies <code>fd1</code> onto <code>fd2</code></li>
+<li><code>fd2</code> gets closed first if it's open</li>
+</ul>
+<h3 id="example-redirect-stdin">Example: Redirect stdin</h3>
+<pre><code class="hljs c language-c"><span class="hljs-keyword">int</span> fd;
+fd = <span class="hljs-built_in">open</span>(<span class="hljs-string">"foo"</span>, ...);
+<span class="hljs-built_in">close</span>(<span class="hljs-number">0</span>);
+dup(fd); <span class="hljs-comment">// guaranteed to be 0 as 0 is the lowest closed</span>
+</code></pre>
+<pre><code class="hljs c language-c"><span class="hljs-keyword">int</span> fd;
+fd = <span class="hljs-built_in">open</span>(<span class="hljs-string">"foo"</span>, ...);
+dup2(fd, <span class="hljs-number">0</span>);
+</code></pre>
+<ul>
+<li>Note: 1 is stdout</li>
+</ul>
+<h2 id="named-pipes">Named Pipes</h2>
+<ul>
+<li><p>Have an entry in the file system</p></li>
+<li><p>Unidirectional</p></li>
+<li><p>Loose synchronization</p>
+<ul>
+<li>Opening either end blocks until the other end is opened</li></ul></li>
+<li><p>Uses <code>read()</code> and <code>write()</code> calls</p></li>
+<li><p>Used in Client/Server model</p></li>
+<li><p>Linux guarantees that at least <code>PIPE_BUF</code> bytes can be written to the pipe <em>atomically</em></p></li>
+</ul>
+<pre><code class="hljs c language-c">mkfifo(<span class="hljs-string">"/path/to/pipe"</span>, <span class="hljs-number">0644</span>);
+</code></pre>
+<ul>
+<li>Can be created over command line using <code>mkfifo &lt;path/to/pipe&gt;</code></li>
+</ul>
 
     </div>
     <style type='text/css'>body {
