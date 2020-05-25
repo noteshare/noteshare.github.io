@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>README</title>
+    <title>Access_and_Permissions</title>
     <link rel="stylesheet"
       href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
@@ -8,14 +8,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
-    <div id='content'><h1 id="linux-systems-programming">Linux Systems Programming</h1>
-<p><a href="Basics.html">Basics</a></p>
-<p><a href="Time.html">Time</a></p>
-<p><a href="Accessing_Files.html">Accessing Files</a></p>
-<p><a href="Pipes.html">Pipes</a></p>
-<p><a href="Processes.html">Processes</a></p>
-<p><a href="Access_and_Permissions.html">Access and Permissions</a></p>
-<p><a href="File_System.html">File System</a></p>
+    <div id='content'><h1 id="identity">Identity</h1>
+<h2 id="process-of-querying-user-identity">Process of Querying User Identity</h2>
+<ol>
+<li>Program talks to resolver</li>
+<li>Resolver reads the nsswitch.conf file</li>
+<li>The nssswitch.conf file directs resolver to the information that it need<ul>
+<li>e.g. Local file, LDAP, NIS</li></ul></li>
+</ol>
+<pre><code class="hljs c language-c">getpwnam(<span class="hljs-string">"alice"</span>); <span class="hljs-comment">// Querying by user name</span>
+
+getpwuid(<span class="hljs-number">614</span>); <span class="hljs-comment">// Querying by user ID</span>
+</code></pre>
+<ul>
+<li>Both returns <code>struct passwd</code>; returns <code>NULL</code> if not found</li>
+</ul>
+<pre><code class="hljs c language-c">getpwent();
+</code></pre>
+<ul>
+<li>Returns the next account from the database</li>
+<li>Usually used in a loop to step through the user list</li>
+<li>Returns NULL at the end</li>
+<li><code>setpwent()</code> can be used to rewind the list to be beginning</li>
+</ul>
+<h3 id="querying-groups">Querying Groups</h3>
+<pre><code class="hljs c language-c">getgrnam(<span class="hljs-string">"students"</span>); <span class="hljs-comment">// Querying by group name</span>
+
+getgruid(<span class="hljs-number">614</span>); <span class="hljs-comment">// Querying by group ID</span>
+</code></pre>
+<ul>
+<li>Returns a <code>struct group</code></li>
+</ul>
+<pre><code class="hljs c language-c">getgrent(); <span class="hljs-comment">// Step through the group</span>
+
+setgrent(); <span class="hljs-comment">// Rewind</span>
+</code></pre>
+<h2 id="process-identity">Process Identity</h2>
+<ul>
+<li><p>Real User ID - the user that the process is running on the behalf of</p></li>
+<li><p>Effective User ID - the identity that the user may have borrowed under certain circumstances (e.g. root)</p></li>
+<li><p>Normally a process inherits the <em>real</em> user ID across a <code>fork()</code> and an <code>exec()</code></p>
+<ul>
+<li><em>Effective</em> user ID can be inherited if the <code>setuid</code> bit is turned on</li></ul></li>
+</ul>
+<pre><code class="hljs c language-c">getuid(); <span class="hljs-comment">// Real User ID</span>
+getgid(); <span class="hljs-comment">// Real Group ID</span>
+geteuid(); <span class="hljs-comment">// Effective User ID</span>
+getegid(); <span class="hljs-comment">// Effective Group ID</span>
+</code></pre>
+<ul>
+<li>The initial effective ID after an <code>exec()</code> is remembered by the process as the <code>saved set-user-ID</code><ul>
+<li>The process can switch its effective user ID between the real ID and the saved set-user-ID by <code>seteuid(uid)</code></li></ul></li>
+</ul>
 
     </div>
     <style type='text/css'>body {
