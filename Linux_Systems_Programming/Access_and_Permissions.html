@@ -60,6 +60,35 @@ getegid(); <span class="hljs-comment">// Effective Group ID</span>
 <li>The initial effective ID after an <code>exec()</code> is remembered by the process as the <code>saved set-user-ID</code><ul>
 <li>The process can switch its effective user ID between the real ID and the saved set-user-ID by <code>seteuid(uid)</code></li></ul></li>
 </ul>
+<h1 id="file-permissions">File Permissions</h1>
+<ul>
+<li>Permissions are set explicitly in <code>open()</code> and <code>creat()</code></li>
+<li><code>fopen()</code> always set permission to <code>0666</code></li>
+</ul>
+<pre><code class="hljs c language-c">chmod(<span class="hljs-string">"user"</span>, <span class="hljs-number">400</span>);
+</code></pre>
+<h3 id="umask">umask</h3>
+<ul>
+<li><p>umask is a bit mask of permissions <em>not</em> to be assigned</p>
+<ul>
+<li>Represented by an octal constants</li></ul></li>
+<li><p>the requested mode will get applied bitwise and with the 1's complement of the umask, resulting in the assigned mode</p></li>
+</ul>
+<h1 id="file-ownerhsip">File Ownerhsip</h1>
+<ul>
+<li>The owner of a new file is the effective UID of the process that creates it</li>
+<li>The group of a new file depends on the <code>setgid</code> bit<ul>
+<li><code>setgid ? inherited from the parent dir : effective GID of the process</code></li></ul></li>
+</ul>
+<pre><code class="hljs c language-c">chown(<span class="hljs-string">"foo"</span>, <span class="hljs-number">504</span>, <span class="hljs-number">-1</span>); <span class="hljs-comment">// follows symlinks</span>
+
+lchown(<span class="hljs-string">"foo"</span>, <span class="hljs-number">504</span>, <span class="hljs-number">-1</span>); <span class="hljs-comment">// does not follow symlinks</span>
+</code></pre>
+<ul>
+<li>"foo" is the user name</li>
+<li>504 is the new UID</li>
+<li>-1 is the new group ID (-1 means don't change)</li>
+</ul>
 
     </div>
     <style type='text/css'>body {
