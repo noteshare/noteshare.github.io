@@ -1,0 +1,284 @@
+<html>
+  <head>
+    <title>Signals</title>
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div id='content'><h1 id="signal">Signal</h1>
+<ul>
+<li>An event delivered to the process by the kernel</li>
+<li>Can have various sources but is always delivered by the kernel</li>
+</ul>
+<h2 id="signal-types">Signal Types</h2>
+<ul>
+<li>Can be viewed by typing <code>kill -l</code> in the command line</li>
+</ul>
+<h3 id="a-couple-of-important-ones">A couple of important ones</h3>
+<ul>
+<li><code>SIGINT (2)</code> - the signal sent by ^C on terminal</li>
+<li><code>SIGFPE (8)</code> - arthmetic error (e.g. divide by zero)</li>
+<li><code>SIGKILL (9)</code> - lethal signal, cannot be caught or ignored</li>
+<li><code>SIGSEGV (11)</code> - invalid memory reference</li>
+<li><code>SIGTERM (15)</code> - polite "please terminate" signal</li>
+</ul>
+<h2 id="sending-signals">Sending Signals</h2>
+<pre><code class="hljs c language-c">kill(<span class="hljs-number">3644</span>, <span class="hljs-number">15</span>);
+</code></pre>
+<ul>
+<li><code>3644</code> is the target PID</li>
+<li><code>15</code> is the signal number (0 can be used here to test for process existence)</li>
+</ul>
+<h2 id="signal-handler">Signal Handler</h2>
+<pre><code class="hljs c language-c">signal(SIGHUP, hup_handler);
+</code></pre>
+<ul>
+<li><code>SIGHUP</code> - the signal that will be handled</li>
+<li><code>hup_handler</code> - a pointer to the handler function; or one of the following:<ul>
+<li><code>SIG_IGN</code> - ignore signal</li>
+<li><code>SIG_DFL</code> - restore default</li></ul></li>
+</ul>
+<h3 id="handler-structure">Handler structure</h3>
+<pre><code class="hljs c language-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">handler</span><span class="hljs-params">(<span class="hljs-keyword">int</span> sigtype)</span>
+</span>{
+    <span class="hljs-comment">// Handle the signal</span>
+    <span class="hljs-keyword">return</span>;
+}
+</code></pre>
+<ul>
+<li>The function must be of type <code>void</code> and takes an <code>int</code> argument</li>
+<li>Signal delivery is async and can happen any time during the program execution<ul>
+<li>If signal deliver happens during a blocking operation (e.g. <code>read()</code>),<br />
+the operation will fail with an error, returning a -1</li></ul></li>
+</ul>
+<h3 id="alternative-handling-function">Alternative Handling Function</h3>
+<pre><code class="hljs c language-c">sigaction(SIGHUP, &amp;newact, &amp;oldact);
+</code></pre>
+<ul>
+<li><p><code>&amp;newact</code> and <code>&amp;oldact</code> are of <code>struct sigaction</code></p>
+<ul>
+<li><a href="https://www.man7.org/linux/man-pages/man2/sigaction.2.html">Details here</a></li></ul></li>
+<li><p>Within <code>&amp;newact</code></p>
+<ul>
+<li><code>sa_handler</code> - the signal handler or <code>SIG_IGN</code> / <code>SIG_DFL</code></li>
+<li><code>sa_mask</code> - set of signals to be block during the execution of the handler</li>
+<li><code>sa_flags</code> - optional flags</li></ul></li>
+<li><p><code>&amp;oldact</code> - gets the old handler info; NULL if not needed</p></li>
+</ul>
+<h2 id="signal-sets">Signal Sets</h2>
+<ul>
+<li><code>sigset_t</code> is an array of booleans representing a set of signals</li>
+<li><a href="https://www.gnu.org/software/libc/manual/html_node/Signal-Sets.html">Details here</a></li>
+</ul>
+<h2 id="blocking-signals">Blocking signals</h2>
+<ul>
+<li>Each process has a signal mask - a set of signals currently from from delivery</li>
+<li>Blocked signals and held pending and will be delivered when unblocked<ul>
+<li>Multiple pending signals of the same type are not queued</li></ul></li>
+</ul>
+<pre><code class="hljs c language-c">sigprocmask(how, <span class="hljs-built_in">set</span>, oldset)
+</code></pre>
+<ul>
+<li><p>Add or remove signals from the mask</p></li>
+<li><p>how</p>
+<ul>
+<li><code>SIG_BLOCK</code> - add to the mask</li>
+<li><code>SIG_UNBLOCK</code> - remove from the mask</li>
+<li><code>SIG_SETMASK</code> - Assign this signal set to the mask</li></ul></li>
+<li><p>set - the set of signals to add/subtract</p></li>
+<li><p>oldset - the previous mask is returned here</p></li>
+</ul>
+
+    </div>
+    <style type='text/css'>body {
+  font: 400 16px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #111;
+  background-color: #fdfdfd;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-feature-settings: "kern" 1;
+  -moz-font-feature-settings: "kern" 1;
+  -o-font-feature-settings: "kern" 1;
+  font-feature-settings: "kern" 1;
+  font-kerning: normal;
+  padding: 30px;
+}
+
+@media only screen and (max-width: 600px) {
+  body {
+    padding: 5px;
+  }
+
+  body > #content {
+    padding: 0px 20px 20px 20px !important;
+  }
+}
+
+body > #content {
+  margin: 0px;
+  max-width: 900px;
+  border: 1px solid #e1e4e8;
+  padding: 10px 40px;
+  padding-bottom: 20px;
+  border-radius: 2px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+hr {
+  color: #bbb;
+  background-color: #bbb;
+  height: 1px;
+  flex: 0 1 auto;
+  margin: 1em 0;
+  padding: 0;
+  border: none;
+}
+
+/**
+ * Links
+ */
+a {
+  color: #0366d6;
+  text-decoration: none; }
+  a:visited {
+    color: #0366d6; }
+  a:hover {
+    color: #0366d6;
+    text-decoration: underline; }
+
+pre {
+  background-color: #f6f8fa;
+  border-radius: 3px;
+  font-size: 85%;
+  line-height: 1.45;
+  overflow: auto;
+  padding: 16px;
+}
+
+/**
+  * Code blocks
+  */
+
+code {
+  background-color: rgba(27,31,35,.05);
+  border-radius: 3px;
+  font-size: 85%;
+  margin: 0;
+  word-wrap: break-word;
+  padding: .2em .4em;
+  /* Override highlight.js font */
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+}
+
+pre > code {
+  background-color: transparent;
+  border: 0;
+  display: inline;
+  line-height: inherit;
+  margin: 0;
+  overflow: visible;
+  padding: 0;
+  word-wrap: normal;
+  font-size: 100%;
+}
+
+
+/**
+ * Blockquotes
+ */
+blockquote {
+  margin-left: 30px;
+  margin-top: 0px;
+  margin-bottom: 16px;
+  border-left-width: 3px;
+  padding: 0 1em;
+  color: #828282;
+  border-left: 4px solid #e8e8e8;
+  padding-left: 15px;
+  font-size: 18px;
+  letter-spacing: -1px;
+  font-style: italic;
+}
+blockquote * {
+  font-style: normal !important;
+  letter-spacing: 0;
+  color: #6a737d !important;
+}
+
+/**
+ * Tables
+ */
+table {
+  border-spacing: 2px;
+  display: block;
+  font-size: 14px;
+  overflow: auto;
+  width: 100%;
+  margin-bottom: 16px;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+td {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+th {
+  font-weight: 600;
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+tr {
+  background-color: #fff;
+  border-top: 1px solid #c6cbd1;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+/**
+ * Others
+ */
+
+img {
+  max-width: 100%;
+}
+
+p {
+  line-height: 24px;
+  font-weight: 400;
+  font-size: 16px;
+  color: #24292e; }
+
+ul {
+  margin-top: 0; }
+
+li {
+  color: #24292e;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5; }
+
+li + li {
+  margin-top: 0.25em; }
+
+a:visited {
+  color: #0366d6; }
+
+h1, h2, h3 {
+  border-bottom: 1px solid #eaecef;
+  color: #111;
+  /* Darker */ }
+
+.hljs {
+    /* Hide to show github style background */
+    background-color: transparent !important;
+}</style>
+  </body>
+</html>
