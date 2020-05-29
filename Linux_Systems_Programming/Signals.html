@@ -91,6 +91,18 @@ the operation will fail with an error, returning a -1</li></ul></li>
 <li><p>set - the set of signals to add/subtract</p></li>
 <li><p>oldset - the previous mask is returned here</p></li>
 </ul>
+<h2 id="possible-way-of-signal-handling">Possible way of signal handling</h2>
+<ol>
+<li>Ignore</li>
+<li>Terminate gracefully (include cleanup)</li>
+<li>Reconfigure on the fly (e.g. reread a config file)</li>
+<li>Report status dynamically</li>
+<li>Turn debugging on and off</li>
+<li>Implement a timeout<ul>
+<li>Some system calls never timeout (e.g. read), we can use signals to<br />
+implement a timeout; need to ensure the system call not restarting after<br />
+a signal</li></ul></li>
+</ol>
 
     </div>
     <style type='text/css'>body {
