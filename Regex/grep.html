@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>README</title>
+    <title>grep</title>
     <link rel="stylesheet"
       href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
@@ -8,10 +8,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
-    <div id='content'><h1 id="regex">Regex</h1>
-<p><a href="Cheatsheet.html">Cheatsheet</a></p>
-<p><a href="grep.html">grep</a></p>
-<p><a href="sed.html">sed</a></p>
+    <div id='content'><h1 id="grep">grep</h1>
+<ul>
+<li>Allows you to search output or files</li>
+</ul>
+<h2 id="piping">Piping</h2>
+<pre><code class="hljs bash language-bash">cmd_with_output | grep <span class="hljs-string">"pattern"</span>
+</code></pre>
+<p><code>-i</code> - case insensitive</p>
+<p><code>-v</code> - exclude the pattern</p>
+<h2 id="search-file">Search File</h2>
+<pre><code class="hljs bash language-bash">grep file1 file2 dir/* ...  <span class="hljs-string">"pattern"</span>
+</code></pre>
+<ul>
+<li>Can include multiple files or directories to search</li>
+</ul>
+<p><code>-c</code> - counting the number of occurrences</p>
 
     </div>
     <style type='text/css'>body {

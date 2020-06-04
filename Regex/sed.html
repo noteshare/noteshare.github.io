@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>README</title>
+    <title>sed</title>
     <link rel="stylesheet"
       href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
@@ -8,10 +8,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
-    <div id='content'><h1 id="regex">Regex</h1>
-<p><a href="Cheatsheet.html">Cheatsheet</a></p>
-<p><a href="grep.html">grep</a></p>
-<p><a href="sed.html">sed</a></p>
+    <div id='content'><h1 id="sed">sed</h1>
+<ul>
+<li>No changes will be made without the <code>-i</code> option</li>
+<li>A backup file can be created by inserting <code>-i.bak</code><ul>
+<li>This will create a backup file called <code>&lt;og_filename&gt;.bak</code>, the <code>bak</code><br />
+extension is customizable</li></ul></li>
+</ul>
+<h2 id="printing">Printing</h2>
+<pre><code class="hljs bash language-bash">sed -n <span class="hljs-string">' p '</span> &lt;file&gt;
+</code></pre>
+<ul>
+<li><code>-n</code> - surpresses stdout; useful when using the print option</li>
+</ul>
+<pre><code class="hljs bash language-bash">sed -n <span class="hljs-string">'1,5 p '</span> &lt;file&gt;
+</code></pre>
+<ul>
+<li>only print from line 1 to 5</li>
+</ul>
+<pre><code class="hljs bash language-bash">sed -n <span class="hljs-string">'/^a[0-9]/ p '</span> &lt;file&gt;
+</code></pre>
+<ul>
+<li>print all lines that matches the regex</li>
+</ul>
+<h2 id="substitution">Substitution</h2>
+<pre><code class="hljs bash language-bash">sed <span class="hljs-string">' [range] s/&lt;string&gt;/&lt;replacement&gt;/ '</span> &lt;file&gt;
+</code></pre>
+<ul>
+<li>The delimeter of the regex is the first character after <code>s</code></li>
+</ul>
+<pre><code class="hljs bash language-bash"><span class="hljs-comment"># e.g. alternative delimeter</span>
+
+sed <span class="hljs-string">' s@/bin/bash@/bin/sh@ '</span> &lt;file&gt;
+</code></pre>
+<h2 id="append">Append</h2>
+<pre><code class="hljs bash language-bash">sed ; /&lt;pattern&gt;/ a &lt;string&gt;<span class="hljs-string">' &lt;file&gt;'</span>
+</code></pre>
+<ul>
+<li>Append string as a line after the pattern</li>
+</ul>
+<h2 id="insert">Insert</h2>
+<pre><code class="hljs bash language-bash">sed <span class="hljs-string">' /&lt;pattern&gt;/ i &lt;string&gt;'</span> &lt;file&gt;<span class="hljs-string">'
+</span></code></pre>
+<ul>
+<li>Insert string as a line before the pattern</li>
+</ul>
+<pre><code class="hljs bash language-bash">sed <span class="hljs-string">' /&lt;pattern&gt;/d '</span> &lt;file&gt;
+</code></pre>
+<ul>
+<li>Delete the line from the file matching the pattern</li>
+</ul>
+<h2 id="sed-control-files">sed Control files</h2>
+<ul>
+<li>sed commands can be inserted into a file, which can be later referenced<br />
+using the <code>-f</code> option in the sed command</li>
+</ul>
+<pre><code class="hljs bash language-bash">sed -f ntp.sed /etc/ntp.conf <span class="hljs-comment"># applies ntp.sed on ntp.conf</span>
+</code></pre>
 
     </div>
     <style type='text/css'>body {
