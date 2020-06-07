@@ -65,6 +65,23 @@ using the <code>-f</code> option in the sed command</li>
 </ul>
 <pre><code class="hljs bash language-bash">sed -f ntp.sed /etc/ntp.conf <span class="hljs-comment"># applies ntp.sed on ntp.conf</span>
 </code></pre>
+<h2 id="substitution-groups">Substitution groups</h2>
+<ul>
+<li>Defined by open and close brackets</li>
+<li>Captured string is represented by \1, \2, \3… in the replacement string</li>
+</ul>
+<pre><code class="hljs bash language-bash">sed <span class="hljs-string">'s/\([^,]*\)/\U\1'</span>
+</code></pre>
+<ul>
+<li>This matches everything that's before a comma and convert the string to upper case</li>
+</ul>
+<h2 id="execute-commands">Execute Commands</h2>
+<pre><code class="hljs bash language-bash">sed <span class="hljs-string">'s/^/ls -l/e'</span> list.txt
+</code></pre>
+<ul>
+<li>Reads from a list of files and list them</li>
+<li>Realized using `s/<pattern>/<cmd>/e</li>
+</ul>
 
     </div>
     <style type='text/css'>body {
