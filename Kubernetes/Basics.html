@@ -10,15 +10,22 @@
   <body>
     <div id='content'><h1 id="architecture-and-terminologies">Architecture and Terminologies</h1>
 <h3 id="terminologies">Terminologies</h3>
-<p><strong>Nodes</strong> - host that run Kubernetes applications</p>
-<p><strong>Pods</strong> - units of deployment</p>
-<p><strong>Containers</strong> - units of packaging</p>
+<p><strong>Nodes</strong> - host that run Kubernetes applications<br />
+    - Runs on individual "servers"<br />
+    - Manages a collection of pods</p>
+<p><strong>Pods</strong> - units of deployment<br />
+    - Runs one or more containers<br />
+    - Has it's own IP address</p>
+<p><strong>Containers</strong> - units of packaging<br />
+    - Usually docker</p>
 <p><strong>Replication Controller</strong> - ensures availability and scalability</p>
 <ul>
 <li>Ensure that the containers are in the desired state in any given point of time</li>
 </ul>
 <p><strong>Labels</strong> - key-value pairs for identification</p>
-<p><strong>Services</strong> - collection of pods exposed as an endpoint</p>
+<p><strong>Services</strong> - collection of pods exposed as an endpoint<br />
+    - Facilitate communcation between pods by having a constant IP address<br />
+    - Identifies which pod belongs to it using labels</p>
 <p><img src="/assets/kubearch040730.png" alt="" /></p>
 <h4 id="pods">Pods</h4>
 <ul>
