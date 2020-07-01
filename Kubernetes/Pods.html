@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>README</title>
+    <title>Pods</title>
     <link rel="stylesheet"
       href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
@@ -8,10 +8,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
-    <div id='content'><h1 id="kubernetes">Kubernetes</h1>
-<p><a href="Useful_Commands.html">Useful Commands</a></p>
-<p><a href="Basics.html">Basics</a></p>
-<p><a href="Pods.html">Pods</a></p>
+    <div id='content'><h1 id="pods">Pods</h1>
+<ul>
+<li><p>Atomic unit of scheduling</p></li>
+<li><p>One pod gets assigned to one node</p></li>
+<li><p>Each pod has its own unique IP address</p>
+<ul>
+<li>Can be used to communicate with each other</li></ul></li>
+<li><p>Containers within nodes communicate using localhost</p></li>
+<li><p>Usually deployed with Replication Controller</p></li>
+</ul>
 
     </div>
     <style type='text/css'>body {
