@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>README</title>
+    <title>Basics</title>
     <link rel="stylesheet"
       href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
@@ -8,20 +8,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
-    <div id='content'><h1 id="random-notes">Random Notes</h1>
-<p><a href="Linux_Systems_Programming/README.html">Linux Systems Programming</a></p>
-<p><a href="Machine_Learning/README.html">Machine Learning</a></p>
-<p><a href="Linux_Networks_Programming/README.html">Linux Networks Programming</a></p>
-<p><a href="Docker/README.html">Docker</a></p>
-<p><a href="SQL/README.html">SQL</a></p>
-<p><a href="Golang/README.html">Golang</a></p>
-<p><a href="Bash/README.html">Bash</a></p>
-<p><a href="AWS/README.html">AWS</a></p>
-<p><a href="Leet_Code/README.html">Leet Code</a></p>
-<p><a href="Kubernetes/README.html">Kubernetes</a></p>
-<p><a href="Ruby_On_Rails/README.html">Ruby On Rails</a></p>
-<p><a href="Crack_The_Coding_Interview/README.html">Crack The Coding Interview</a></p>
-<p><a href="Regex/README.html">Regex</a></p>
+    <div id='content'><h1 id="tcp-vs-udp">TCP vs. UDP</h1>
+<h2 id="udp">UDP</h2>
+<ul>
+<li>Best effort delivery</li>
+<li>Can be out of order</li>
+<li>Can lose packets</li>
+<li>Message boundaries are preserved</li>
+<li>Recipient need to know the address of the sender to reply</li>
+</ul>
+<h2 id="tcp">TCP</h2>
+<ul>
+<li>Guaranteed delivery</li>
+<li>Recipient does not need to know the sender's address to reply</li>
+<li>Message boundaires are not guaranteed</li>
+<li>Four entities defining a connection<ul>
+<li>client port (ephemeral)</li>
+<li>client address</li>
+<li>server port (well known)</li>
+<li>server address</li></ul></li>
+</ul>
 
     </div>
     <style type='text/css'>body {
